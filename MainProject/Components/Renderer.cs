@@ -6,8 +6,10 @@ namespace MainProject.Components;
 
 public class Renderer : IComponent
 {
-    private Texture2D _texture;
-    private Transform _transform;
+    public Texture2D Texture { get; set; }
+    public Transform Transform { get; set; }
+
+    public Color Color { get; set; } = Color.White;
 
     public Renderer()
     {
@@ -16,17 +18,17 @@ public class Renderer : IComponent
     
     public Renderer(Transform transform)
     {
-        _transform = transform;
+        Transform = transform;
     }
 
     public Renderer(Texture2D texture, Transform transform)
     {
-        _texture = texture;
-        _transform = transform;
+        Texture = texture;
+        Transform = transform;
     }
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        spriteBatch.Draw(_texture, _transform.Position, Color.White);
+        spriteBatch.Draw(Texture, Transform.Position, Color);
     }
 }

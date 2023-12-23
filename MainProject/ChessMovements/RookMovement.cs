@@ -1,70 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using MainProject.Components;
 using MainProject.Entities;
+using Microsoft.Xna.Framework;
 
 namespace MainProject.ChessMovements;
 
 public class RookMovement : IChessMovement
 {
     private readonly ChessBoard _chessBoard;
-    private readonly ChessPosition _chessPosition;
-    private readonly ChessColor _chessColor;
-    private Point _pos;
-    private Square CurrentSquare => _chessBoard.Squares[_pos.Y, _pos.X];
+    private readonly RookPiece _rookPiece;
+    private readonly Square _startingSquare;
+    private Point Pos => _rookPiece.ChessPosition.Position;
 
-    public RookMovement(ChessBoard chessBoard, ChessPiece chessPiece)
+    public RookMovement(ChessBoard chessBoard, RookPiece rookPiece)
     {
+        _rookPiece = rookPiece;
         _chessBoard = chessBoard;
-        _chessPosition = chessPiece.ChessPosition;
-        _chessColor = chessPiece.ChessColor;
+        _startingSquare = rookPiece.CurrentSquare;
     }
 
     public List<Square> GetMovableSquares()
     {
-        var squares = new List<Square>();
-        
-        Test(()=> _pos.X++);
-        Test(()=> _pos.X--);
-        Test(()=> _pos.Y++);
-        Test(()=> _pos.Y--);
+        var movableSquares = new List<Square>();
 
-        return squares;
+        CommonMovements.StraightLines(
+            Pos, () => new Point(1, 0), _chessBoard, movableSquares, _startingSquare.SquareState);
+        CommonMovements.StraightLines(
+            Pos, () => new Point(-1, 0), _chessBoard, movableSquares, _startingSquare.SquareState);
+        CommonMovements.StraightLines(
+            Pos, () => new Point(0, -1), _chessBoard, movableSquares, _startingSquare.SquareState);
+        CommonMovements.StraightLines(
+            Pos, () => new Point(0, 1), _chessBoard, movableSquares, _startingSquare.SquareState);
 
-        void Test(Action incrementation)
-        {
-            _pos = _chessPosition.Position;
-            incrementation();
-            while (_chessBoard.InsideChessBoard(_pos))
-            {
-                if (CurrentSquare.SquareState == SquareState.NotOccupied)
-                {
-                    squares.Add(CurrentSquare);
-                }
-                else if (CurrentSquare.SquareState == SquareState.OccupiedByBlack)
-                {
-                    if (_chessColor == ChessColor.Black)
-                    {
-                        break;
-                    }
-
-                    squares.Add(CurrentSquare);
-                    break;
-                }
-                else if (CurrentSquare.SquareState == SquareState.OccupiedByWhite)
-                {
-                    if (_chessColor == ChessColor.White)
-                    {
-                        break;
-                    }
-                    squares.Add(CurrentSquare);
-                    break;
-                
-                }
-
-                incrementation();
-            }
-        }
+        return movableSquares;
     }
 }

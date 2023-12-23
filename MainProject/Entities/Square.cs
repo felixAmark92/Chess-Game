@@ -2,7 +2,6 @@
 using MainProject.Entities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Point = System.Drawing.Point;
 
 namespace MainProject;
 
@@ -27,7 +26,7 @@ public class Square : Entity
             return SquareState.OccupiedByBlack;
         }
 
-        return MainProject.SquareState.OccupiedByWhite;
+        return SquareState.OccupiedByWhite;
     }
     
     

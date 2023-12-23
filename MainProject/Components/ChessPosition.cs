@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿
+using Microsoft.Xna.Framework;
 
 namespace MainProject.Components;
 
@@ -16,7 +17,7 @@ public class ChessPosition : IComponent
         Position = position;
     }
 
-    public string BoardPosition
+    public string Board
     {
         get
         {

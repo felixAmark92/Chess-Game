@@ -6,7 +6,6 @@ using MainProject.Entities;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Point = System.Drawing.Point;
 
 namespace MainProject;
 
@@ -34,11 +33,11 @@ public class ChessBoard : Entity
             for (int j = 0; j < Squares.GetLength(1); j++)
             {
                 Squares[i, j] = new Square(new Point(j, i), chessColor, SquaresSize);
-                Console.Write(Squares[i,j].GetComponent<ChessPosition>().BoardPosition);
+                Squares[i, j].GetComponent<Renderer>().Texture = chessColor;
+                Squares[i, j].GetComponent<Transform>().Position = new Vector2(j * SquaresSize, i * SquaresSize);
                 chessColor = ColorSwapped(chessColor);
             }
             chessColor = ColorSwapped(chessColor);
-            Console.WriteLine();
         }
     }
 
