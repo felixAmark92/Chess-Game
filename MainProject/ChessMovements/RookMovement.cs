@@ -9,11 +9,11 @@ namespace MainProject.ChessMovements;
 public class RookMovement : IChessMovement
 {
     private readonly ChessBoard _chessBoard;
-    private readonly RookPiece _rookPiece;
+    private readonly ChessPiece _rookPiece;
     private readonly Square _startingSquare;
     private Point Pos => _rookPiece.ChessPosition.Position;
 
-    public RookMovement(ChessBoard chessBoard, RookPiece rookPiece)
+    public RookMovement(ChessBoard chessBoard, ChessPiece rookPiece)
     {
         _rookPiece = rookPiece;
         _chessBoard = chessBoard;

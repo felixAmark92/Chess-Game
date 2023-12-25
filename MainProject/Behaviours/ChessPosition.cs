@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 
 namespace MainProject.Components;
 
-public class ChessPosition : IComponent
+public class ChessPosition
 {
     public Point Position { get; set; }
 

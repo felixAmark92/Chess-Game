@@ -5,6 +5,5 @@ namespace MainProject.ChessMovements;
 
 public interface IChessMovement
 {
-
     List<Square> GetMovableSquares();
 }

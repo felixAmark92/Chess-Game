@@ -1,6 +1,8 @@
 ﻿using System;
 using MainProject.Components;
 using MainProject.Entities;
+using MainProject.Factories;
+using MainProject.Systems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -14,9 +16,6 @@ public class ChessGame : Game
 
     private ChessBoard _chessboard;
 
-    private RookPiece _rookPiece;
-    private RookPiece _rookPiece2;
-
     public ChessGame()
     {
         _graphics = new GraphicsDeviceManager(this);
@@ -27,34 +26,25 @@ public class ChessGame : Game
     protected override void Initialize()
     {
         // TODO: Add your initialization logic here
-        _chessboard = new ChessBoard();
         _graphics.PreferredBackBufferHeight = 800;
         _graphics.PreferredBackBufferWidth = 800;
         _graphics.ApplyChanges();
+        Textures.InitializeTextures(Content);
 
         base.Initialize();
     }
 
     protected override void LoadContent()
     {
-        Textures.InitializeTextures(Content);
-        _spriteBatch = new SpriteBatch(GraphicsDevice);
-        _chessboard.LoadTexture(Content);
+        _chessboard = new ChessBoard();
         _chessboard.LoadBoard();
+        ChessPieceFactory.ChessBoard = _chessboard;
+        _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-
-        _rookPiece = new RookPiece(Textures.WhiteRook, ChessColor.White, _chessboard, new Point(3, 3));
-        _rookPiece2 = new RookPiece(Textures.WhiteRook, ChessColor.Black, _chessboard, new Point(3, 6));
-
+        ChessPieceFactory.CreateChessPiece(ChessType.Rook, ChessColor.White, new Point(5, 5));
+        ChessPieceFactory.CreateChessPiece(ChessType.Bishop, ChessColor.White, new Point(1, 5));
 
         // TODO: use this.Content to load your game content here
-
-        var moves = _rookPiece.GetMovableSquares();
-
-        foreach (var square in moves)
-        {
-            square.GetComponent<Renderer>().Color = Color.Green;
-        }
     }
 
     protected override void Update(GameTime gameTime)
@@ -64,6 +54,7 @@ public class ChessGame : Game
             Exit();
 
         // TODO: Add your update logic here
+        InteractiveSystem.Update();
 
         base.Update(gameTime);
     }
@@ -73,9 +64,7 @@ public class ChessGame : Game
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
         _spriteBatch.Begin();
-        _chessboard.Draw(_spriteBatch);
-        _rookPiece.GetComponent<Renderer>().Draw(_spriteBatch);
-        _rookPiece2.GetComponent<Renderer>().Draw(_spriteBatch);
+        RenderingSystem.Draw(_spriteBatch);
         _spriteBatch.End();
 
         base.Draw(gameTime);

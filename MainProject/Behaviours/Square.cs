@@ -5,10 +5,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace MainProject;
 
-public class Square : Entity
+public class Square : Behaviour
 {
     public ChessPosition ChessPosition  { get; }
-    
     public ChessPiece OccupyingChessPiece { get; set; }
 
     public SquareState SquareState => GetSquareState();
@@ -30,16 +29,10 @@ public class Square : Entity
     }
     
     
-    public Square(Point position, Texture2D squareColor, int squareSize)
+    public Square(Point position)
     {
-        var transform = new Transform();
-        transform.Position = new Vector2(position.X * squareSize, position.Y * squareSize);
-
+ 
         ChessPosition = new ChessPosition(position);
-        
-        Components.Add(ChessPosition);
-        Components.Add(transform);
-        Components.Add(new Renderer(squareColor, transform));
         
     }
 }

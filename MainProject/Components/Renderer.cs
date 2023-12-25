@@ -1,34 +1,19 @@
-﻿using Microsoft.Xna.Framework;
+﻿using MainProject.Entities;
+using MainProject.Systems;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace MainProject.Components;
 
-public class Renderer : IComponent
+public class Renderer : Component
 {
     public Texture2D Texture { get; set; }
-    public Transform Transform { get; set; }
-
     public Color Color { get; set; } = Color.White;
 
-    public Renderer()
-    {
-        
-    }
-    
-    public Renderer(Transform transform)
-    {
-        Transform = transform;
-    }
 
-    public Renderer(Texture2D texture, Transform transform)
+    public Renderer(Entity entity) : base(entity)
     {
-        Texture = texture;
-        Transform = transform;
-    }
-
-    public void Draw(SpriteBatch spriteBatch)
-    {
-        spriteBatch.Draw(Texture, Transform.Position, Color);
+        RenderingSystem.NotifyChanges();
     }
 }

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using MainProject.ChessMovements;
 using MainProject.Components;
 using Microsoft.Xna.Framework;
@@ -6,8 +8,9 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace MainProject.Entities;
 
-public abstract class ChessPiece : Entity
+public abstract class ChessPiece : Behaviour
 {
+     private readonly ChessBoard _chessBoard;
      private Square _currentSquare;
      
      protected IChessMovement ChessMovement { get; set; }
@@ -20,7 +23,25 @@ public abstract class ChessPiece : Entity
      {
           ChessColor = chessColor;
           CurrentSquare = chessBoard.Squares[pos.Y, pos.X];
-          GetComponent<Transform>().Position = new Vector2(pos.X * chessBoard.SquaresSize, pos.Y * chessBoard.SquaresSize);
+          _chessBoard = chessBoard;
+
+
+     }
+
+     public override void ComponentsInit()
+     {
+          Entity.GetComponent<Transform>().Position =
+               new Vector2(_currentSquare.ChessPosition.Position.X * _chessBoard.SquaresSize, 
+                    _currentSquare.ChessPosition.Position.Y * _chessBoard.SquaresSize);
+
+          Entity.GetComponent<Interactive>().OnLeftClick += () =>
+          {
+               Console.WriteLine(Entity.Id);
+               
+               var list = GetMovableSquares().Select(s => s.Entity);
+               
+               Highlighter.HighlightEntities(list);
+          };
      }
 
      public List<Square> GetMovableSquares()
