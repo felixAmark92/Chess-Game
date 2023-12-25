@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-using MainProject.Entities;
+using MainProject.Behaviours;
+using MainProject.Behaviours.ChessPieces;
 using Microsoft.Xna.Framework;
 
 namespace MainProject.ChessMovements;

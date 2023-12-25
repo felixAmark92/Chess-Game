@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using MainProject.Behaviours;
+using MainProject.Enums;
 using Microsoft.Xna.Framework;
 
 namespace MainProject.ChessMovements;

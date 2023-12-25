@@ -1,14 +1,14 @@
 ﻿using System;
+using MainProject.Behaviours;
 using MainProject.Components;
-using MainProject.Entities;
-using MainProject.Managers;
+using MainProject.Entity;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace MainProject.Builders;
 
 public class EntityBuilder
 {
-    private Entity _entity;
+    private Entity.Entity _entity;
 
 
     private EntityBuilder()
@@ -45,7 +45,7 @@ public class EntityBuilder
         return this;
     }
 
-    public Entity Build()
+    public Entity.Entity Build()
     {
         return _entity;
     }

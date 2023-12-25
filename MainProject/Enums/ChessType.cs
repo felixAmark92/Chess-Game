@@ -1,4 +1,4 @@
-﻿namespace MainProject;
+﻿namespace MainProject.Enums;
 
 public enum ChessType
 {

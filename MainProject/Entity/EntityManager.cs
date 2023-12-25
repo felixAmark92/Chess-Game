@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using MainProject.Entities;
+using MainProject.Components;
 
-namespace MainProject.Managers;
+namespace MainProject.Entity;
 
 public static class EntityManager
 {

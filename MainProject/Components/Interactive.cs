@@ -1,5 +1,4 @@
 ﻿using System;
-using MainProject.Entities;
 using MainProject.Systems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -22,7 +21,7 @@ public class Interactive : Component
 
     public event Action OnLeftClick;
 
-    public Interactive(Entity entity) : base(entity)
+    public Interactive(Entity.Entity entity) : base(entity)
     {
         _renderer = entity.GetComponent<Renderer>();
         _transform = entity.GetComponent<Transform>();

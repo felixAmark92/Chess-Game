@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using MainProject.ChessMovements;
 using MainProject.Components;
+using MainProject.Enums;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
-namespace MainProject.Entities;
+namespace MainProject.Behaviours.ChessPieces;
 
 public abstract class ChessPiece : Behaviour
 {

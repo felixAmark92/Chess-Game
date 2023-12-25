@@ -1,6 +1,7 @@
 ﻿using System;
+using MainProject.Behaviours;
 using MainProject.Components;
-using MainProject.Entities;
+using MainProject.Enums;
 using MainProject.Factories;
 using MainProject.Systems;
 using Microsoft.Xna.Framework;

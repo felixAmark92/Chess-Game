@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using MainProject.Behaviours;
 using MainProject.Components;
-using Microsoft.Xna.Framework.Graphics;
 
-namespace MainProject.Entities;
+namespace MainProject.Entity;
 
 public class Entity
 {

@@ -1,5 +1,4 @@
-﻿using MainProject.Entities;
-using MainProject.Systems;
+﻿using MainProject.Systems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -12,7 +11,7 @@ public class Renderer : Component
     public Color Color { get; set; } = Color.White;
 
 
-    public Renderer(Entity entity) : base(entity)
+    public Renderer(Entity.Entity entity) : base(entity)
     {
         RenderingSystem.NotifyChanges();
     }

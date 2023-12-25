@@ -1,10 +1,8 @@
-﻿using System;
-using MainProject.ChessMovements;
-using MainProject.Components;
+﻿using MainProject.ChessMovements;
+using MainProject.Enums;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
-namespace MainProject.Entities;
+namespace MainProject.Behaviours.ChessPieces;
 
 public class BishopPiece : ChessPiece
 {

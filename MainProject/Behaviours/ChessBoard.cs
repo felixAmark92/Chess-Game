@@ -1,14 +1,8 @@
-﻿using System;
-using System.Linq;
-using System.Net.Mime;
-using MainProject.Components;
-using MainProject.Entities;
+﻿using MainProject.Enums;
 using MainProject.Factories;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 
-namespace MainProject;
+namespace MainProject.Behaviours;
 
 public class ChessBoard
 {

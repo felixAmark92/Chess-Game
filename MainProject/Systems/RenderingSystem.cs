@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using MainProject.Components;
-using MainProject.Entities;
-using MainProject.Managers;
+using MainProject.Entity;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace MainProject.Systems;
 
 public static class RenderingSystem
 {
-    private static IEnumerable<Entity> _renderableEntities;
+    private static IEnumerable<Entity.Entity> _renderableEntities;
     
     public static void NotifyChanges()
     {

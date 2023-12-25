@@ -1,16 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using MainProject.Components;
-using MainProject.Entities;
 using Microsoft.Xna.Framework;
 
 namespace MainProject;
 
 public static class Highlighter
 {
-    private static IEnumerable<Entity> _higlightedEntities = new List<Entity>();
+    private static IEnumerable<Entity.Entity> _higlightedEntities = new List<Entity.Entity>();
 
-    public static void HighlightEntities(IEnumerable<Entity> entities)
+    public static void HighlightEntities(IEnumerable<Entity.Entity> entities)
     {
         foreach (var entity in _higlightedEntities)
         {

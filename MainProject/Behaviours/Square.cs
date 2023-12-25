@@ -1,9 +1,8 @@
-﻿using MainProject.Components;
-using MainProject.Entities;
+﻿using MainProject.Behaviours.ChessPieces;
+using MainProject.Enums;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
-namespace MainProject;
+namespace MainProject.Behaviours;
 
 public class Square : Behaviour
 {

@@ -1,13 +1,10 @@
-﻿using MainProject.Entities;
-using MainProject.Managers;
-
-namespace MainProject;
+﻿namespace MainProject.Components;
 
 public class Component
 {
-    private readonly Entity _entity;
+    private readonly Entity.Entity _entity;
 
-    public Component(Entity entity)
+    public Component(Entity.Entity entity)
     {
         _entity = entity;
     }

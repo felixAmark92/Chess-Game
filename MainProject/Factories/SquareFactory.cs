@@ -1,6 +1,7 @@
-﻿using MainProject.Components;
-using MainProject.Entities;
-using MainProject.Managers;
+﻿using MainProject.Behaviours;
+using MainProject.Components;
+using MainProject.Entity;
+using MainProject.Enums;
 using Microsoft.Xna.Framework;
 
 namespace MainProject.Factories;
@@ -8,7 +9,7 @@ namespace MainProject.Factories;
 public static class SquareFactory
 {
 
-    public static Entity CreateSquare(ChessColor chessColor, Point position, int squareSize)
+    public static Entity.Entity CreateSquare(ChessColor chessColor, Point position, int squareSize)
     {
         var entity = EntityManager.CreateEntity();
         var square = new Square(position);

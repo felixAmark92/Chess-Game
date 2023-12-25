@@ -1,11 +1,8 @@
-﻿using MainProject.Entities;
-using MainProject.Managers;
-
-namespace MainProject.Components;
+﻿namespace MainProject.Behaviours;
 
 public abstract class Behaviour
 {
-    public Entity Entity { get; set; }
+    public Entity.Entity Entity { get; set; }
 
     public Behaviour()
     {

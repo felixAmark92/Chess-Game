@@ -1,7 +1,7 @@
 ﻿
 using Microsoft.Xna.Framework;
 
-namespace MainProject.Components;
+namespace MainProject.Behaviours;
 
 public class ChessPosition
 {

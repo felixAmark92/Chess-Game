@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using MainProject.Behaviours;
+using MainProject.Behaviours.ChessPieces;
 using MainProject.Builders;
 using MainProject.ChessMovements;
 using MainProject.Components;
-using MainProject.Entities;
-using MainProject.Managers;
+using MainProject.Enums;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -29,7 +30,7 @@ public static class ChessPieceFactory
 
     };
     
-    public static Entity CreateChessPiece(ChessType chessType, ChessColor chessColor, Point pos)
+    public static Entity.Entity CreateChessPiece(ChessType chessType, ChessColor chessColor, Point pos)
     {
         // var entity = EntityManager.CreateEntity();
         // Console.WriteLine($"entityid: {entity.Id}");

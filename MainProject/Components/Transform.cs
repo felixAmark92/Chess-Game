@@ -1,5 +1,4 @@
-﻿using MainProject.Entities;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 
 
 namespace MainProject.Components;
@@ -10,7 +9,7 @@ public class Transform : Component
     
     //for now no need for rotation and scale
     
-    public Transform(Entity entity) : base(entity)
+    public Transform(Entity.Entity entity) : base(entity)
     {
     }
 }
