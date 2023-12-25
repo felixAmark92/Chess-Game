@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using MainProject.ChessMovements;
+using MainProject.ChessMovements.ChessPins;
 using MainProject.Components;
 using MainProject.Enums;
 using Microsoft.Xna.Framework;
@@ -12,44 +13,6 @@ public abstract class ChessPiece : Behaviour
 {
      private readonly ChessBoard _chessBoard;
      private Square _currentSquare;
-     
-     protected IChessMovement ChessMovement { get; set; }
-     
-     public ChessColor ChessColor { get; }
-
-     public ChessPosition ChessPosition => CurrentSquare.ChessPosition;
-
-     public ChessPiece(ChessColor chessColor, ChessBoard chessBoard, Point pos)
-     {
-          ChessColor = chessColor;
-          CurrentSquare = chessBoard.Squares[pos.Y, pos.X];
-          _chessBoard = chessBoard;
-
-
-     }
-
-     public override void ComponentsInit()
-     {
-          Entity.GetComponent<Transform>().Position =
-               new Vector2(_currentSquare.ChessPosition.Position.X * _chessBoard.SquaresSize, 
-                    _currentSquare.ChessPosition.Position.Y * _chessBoard.SquaresSize);
-
-          Entity.GetComponent<Interactive>().OnLeftClick += () =>
-          {
-               Console.WriteLine(Entity.Id);
-               
-               var list = GetMovableSquares().Select(s => s.Entity);
-               
-               Highlighter.HighlightEntities(list);
-          };
-     }
-
-     public List<Square> GetMovableSquares()
-     {
-          return ChessMovement.GetMovableSquares();
-     }
-     
-
      public Square CurrentSquare
      {
           get => _currentSquare;
@@ -67,5 +30,50 @@ public abstract class ChessPiece : Behaviour
 
           }
      }
+     
+     protected IChessMovement ChessMovement { get; set; }
+
+     protected IPinCalculator _pinCalculator { get; set; }
+     public ChessColor ChessColor { get; }
+
+     public Point Pos => CurrentSquare.ChessPosition.Position;
+
+     public ChessPiece(ChessColor chessColor, ChessBoard chessBoard, Point pos)
+     {
+          ChessColor = chessColor;
+          CurrentSquare = chessBoard.Squares[pos.Y, pos.X];
+          _chessBoard = chessBoard;
+     }
+
+     public override void ComponentsInit()
+     {
+          Entity.GetComponent<Transform>().Position =
+               new Vector2(_currentSquare.ChessPosition.Position.X * _chessBoard.SquaresSize, 
+                    _currentSquare.ChessPosition.Position.Y * _chessBoard.SquaresSize);
+          
+          Entity.GetComponent<Renderer>().LayerDepth = 1f;
+          
+          Entity.GetComponent<Interactive>().OnLeftClick += () =>
+          {
+               Console.WriteLine($"{Entity.Id}: {Entity.GetComponent<Renderer>().LayerDepth}");
+               
+               var list = GetMovableSquares().Select(s => s.Entity);
+
+               ChessManager.SelectedPiece = this;
+               ChessManager.SetMovableSquares(list);
+          };
+     }
+
+     public List<Square> GetMovableSquares()
+     {
+          return ChessMovement.GetMovableSquares();
+     }
+     public ChessPin? GetChessPin()
+     {
+          return _pinCalculator.CalculatePin();
+     }
+     
+
+     
 
 }

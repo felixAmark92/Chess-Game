@@ -10,6 +10,8 @@ public class Renderer : Component
     public Texture2D Texture { get; set; }
     public Color Color { get; set; } = Color.White;
 
+    public float LayerDepth { get; set; } = 0f;
+
 
     public Renderer(Entity.Entity entity) : base(entity)
     {

@@ -10,18 +10,17 @@ using Microsoft.Xna.Framework.Input;
 
 namespace MainProject;
 
-public class ChessGame : Game
+public class Main : Game
 {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
 
-    private ChessBoard _chessboard;
-
-    public ChessGame()
+    public Main()
     {
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
+        
     }
 
     protected override void Initialize()
@@ -30,20 +29,19 @@ public class ChessGame : Game
         _graphics.PreferredBackBufferHeight = 800;
         _graphics.PreferredBackBufferWidth = 800;
         _graphics.ApplyChanges();
-        Textures.InitializeTextures(Content);
+        ChessTextures.InitializeTextures(Content);
 
         base.Initialize();
     }
 
     protected override void LoadContent()
     {
-        _chessboard = new ChessBoard();
-        _chessboard.LoadBoard();
-        ChessPieceFactory.ChessBoard = _chessboard;
+        
         _spriteBatch = new SpriteBatch(GraphicsDevice);
+        
+        ChessManager.LoadPieces();
 
-        ChessPieceFactory.CreateChessPiece(ChessType.Rook, ChessColor.White, new Point(5, 5));
-        ChessPieceFactory.CreateChessPiece(ChessType.Bishop, ChessColor.White, new Point(1, 5));
+
 
         // TODO: use this.Content to load your game content here
     }
@@ -64,7 +62,7 @@ public class ChessGame : Game
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
-        _spriteBatch.Begin();
+        _spriteBatch.Begin(SpriteSortMode.FrontToBack);
         RenderingSystem.Draw(_spriteBatch);
         _spriteBatch.End();
 

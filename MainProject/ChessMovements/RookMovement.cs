@@ -11,28 +11,27 @@ public class RookMovement : IChessMovement
 {
     private readonly ChessBoard _chessBoard;
     private readonly ChessPiece _rookPiece;
-    private readonly Square _startingSquare;
-    private Point Pos => _rookPiece.ChessPosition.Position;
+    private  Square CurrentSquare => _rookPiece.CurrentSquare;
+    private Point Pos => _rookPiece.Pos;
 
     public RookMovement(ChessBoard chessBoard, ChessPiece rookPiece)
     {
         _rookPiece = rookPiece;
         _chessBoard = chessBoard;
-        _startingSquare = rookPiece.CurrentSquare;
     }
 
     public List<Square> GetMovableSquares()
     {
         var movableSquares = new List<Square>();
 
-        CommonMovements.StraightLines(
-            Pos, () => new Point(1, 0), _chessBoard, movableSquares, _startingSquare.SquareState);
-        CommonMovements.StraightLines(
-            Pos, () => new Point(-1, 0), _chessBoard, movableSquares, _startingSquare.SquareState);
-        CommonMovements.StraightLines(
-            Pos, () => new Point(0, -1), _chessBoard, movableSquares, _startingSquare.SquareState);
-        CommonMovements.StraightLines(
-            Pos, () => new Point(0, 1), _chessBoard, movableSquares, _startingSquare.SquareState);
+        CommonMovements.StraightLineMovement(
+            Pos, () => new Point(1, 0), _chessBoard, movableSquares, CurrentSquare.SquareState);
+        CommonMovements.StraightLineMovement(
+            Pos, () => new Point(-1, 0), _chessBoard, movableSquares, CurrentSquare.SquareState);
+        CommonMovements.StraightLineMovement(
+            Pos, () => new Point(0, -1), _chessBoard, movableSquares, CurrentSquare.SquareState);
+        CommonMovements.StraightLineMovement(
+            Pos, () => new Point(0, 1), _chessBoard, movableSquares, CurrentSquare.SquareState);
 
         return movableSquares;
     }

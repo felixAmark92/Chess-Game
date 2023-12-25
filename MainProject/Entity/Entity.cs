@@ -46,6 +46,6 @@ public class Entity
 
     public void Destroy()
     {
-        throw new NotImplementedException();
+        EntityManager.DestroyEntity(this);
     }
 }

@@ -3,5 +3,6 @@
 public enum ChessType
 {
     Rook,
-    Bishop
+    Bishop,
+    King
 }

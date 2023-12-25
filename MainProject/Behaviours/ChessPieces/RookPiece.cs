@@ -1,4 +1,5 @@
 ﻿using MainProject.ChessMovements;
+using MainProject.ChessMovements.ChessPins;
 using MainProject.Enums;
 using Microsoft.Xna.Framework;
 
@@ -10,6 +11,7 @@ public class RookPiece : ChessPiece
         : base(color, chessBoard, pos)
     {
         ChessMovement = new RookMovement(chessBoard, this);
+        _pinCalculator = new RookPinCalculator(chessBoard, this);
     }
     
 }

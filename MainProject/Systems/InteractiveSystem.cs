@@ -9,11 +9,17 @@ namespace MainProject.Systems;
 public static class InteractiveSystem
 {
     private static IEnumerable<Interactive> _interactives = new List<Interactive>();
+    
+    public static bool MouseIsDown { get; set; }
 
 
     public static void UpdateInteractives()
     {
-        var entities = EntityManager.GetEntitiesWithComponent<Interactive>();
+        var entities = 
+            EntityManager
+                .GetEntitiesWithComponent<Interactive>()
+                .OrderByDescending(e => e.GetComponent<Renderer>().LayerDepth);
+        
         _interactives = entities.Select(e => e.GetComponent<Interactive>());
     }
 

@@ -7,10 +7,9 @@ namespace MainProject.Components;
 
 public class Interactive : Component
 {
+    private bool _inactive { get; set; }
     private readonly Renderer _renderer;
     private readonly Transform _transform;
-
-    private bool _mouseIsDown;
     private Point MousePosition => Mouse.GetState().Position;
 
     public event Action OnMouseHoover;
@@ -23,11 +22,30 @@ public class Interactive : Component
 
     public Interactive(Entity.Entity entity) : base(entity)
     {
+        if (!entity.HasComponent<Renderer>())
+        {
+            throw new MissingComponentException($"{typeof(Interactive)} is dependent on {typeof(Renderer)}");
+        }
+
+        if (!entity.HasComponent<Transform>())
+        {
+            throw new MissingComponentException($"{typeof(Interactive)} is dependent on {typeof(Transform)}");
+        }
         _renderer = entity.GetComponent<Renderer>();
         _transform = entity.GetComponent<Transform>();
         
         InteractiveSystem.UpdateInteractives();
 
+    }
+
+    public void SetInactive()
+    {
+        _inactive = true;
+    }
+
+    public void SetActive()
+    {
+        _inactive = false;
     }
 
     private bool MouseHoover()
@@ -41,10 +59,10 @@ public class Interactive : Component
     private bool LeftMouseClicked()
     {
         if (MouseHoover() && 
-            !_mouseIsDown && 
+            !InteractiveSystem.MouseIsDown && 
             Mouse.GetState().LeftButton == ButtonState.Pressed)
         {
-            _mouseIsDown = true;
+            InteractiveSystem.MouseIsDown = true;
             return true;
         }
 
@@ -54,9 +72,14 @@ public class Interactive : Component
 
     public void Update()
     {
+        if (_inactive)
+        {
+            return;
+        }
+        
         if (Mouse.GetState().LeftButton == ButtonState.Released)
         {
-            _mouseIsDown = false;
+            InteractiveSystem.MouseIsDown = false;
         }
         if (MouseHoover())
         {

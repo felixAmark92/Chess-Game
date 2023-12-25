@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using MainProject.Components;
 using MainProject.Entity;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace MainProject.Systems;
@@ -25,7 +27,17 @@ public static class RenderingSystem
             var renderer = entity.GetComponent<Renderer>();
             var transform = entity.GetComponent<Transform>();
             
-            spriteBatch.Draw(renderer.Texture, transform.Position, renderer.Color);
+            //spriteBatch.Draw(renderer.Texture, transform.Position, renderer.Color);
+            spriteBatch.Draw(
+                renderer.Texture, 
+                transform.Position, 
+                null,
+                renderer.Color,
+                0f,
+                new Vector2(),
+                1,
+                SpriteEffects.None,
+                renderer.LayerDepth);
         }
     }
 }
