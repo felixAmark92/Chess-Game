@@ -19,26 +19,26 @@ public class KnightMovement : IChessMovement
         _chessBoard = chessBoard;
     }
 
-    public List<Square> GetDefaultSquares()
+    public List<Square> GetDefaultSquares(bool checkInspect)
     {
         var squares = new List<Square>();
         
         squares.AddRange(CommonMovements.pathCalculator(
-            Pos, new Point(1, 2), _chessBoard ,  CurrentSquare.SquareState, 1, true ));
+            Pos, new Point(1, 2), _chessBoard ,  CurrentSquare.SquareState, 1, true, checkInspect ));
         squares.AddRange(CommonMovements.pathCalculator(
-            Pos, new Point(-1, 2), _chessBoard ,  CurrentSquare.SquareState, 1, true ));
+            Pos, new Point(-1, 2), _chessBoard ,  CurrentSquare.SquareState, 1, true, checkInspect ));
         squares.AddRange(CommonMovements.pathCalculator(
-            Pos, new Point(-1, -2), _chessBoard ,  CurrentSquare.SquareState, 1, true ));
+            Pos, new Point(-1, -2), _chessBoard ,  CurrentSquare.SquareState, 1, true, checkInspect ));
         squares.AddRange(CommonMovements.pathCalculator(
-            Pos, new Point(1, -2), _chessBoard ,  CurrentSquare.SquareState, 1, true ));
+            Pos, new Point(1, -2), _chessBoard ,  CurrentSquare.SquareState, 1, true, checkInspect ));
         squares.AddRange(CommonMovements.pathCalculator(
-            Pos, new Point(2, 1), _chessBoard ,  CurrentSquare.SquareState, 1, true ));
+            Pos, new Point(2, 1), _chessBoard ,  CurrentSquare.SquareState, 1, true, checkInspect ));
         squares.AddRange(CommonMovements.pathCalculator(
-            Pos, new Point(2, -1), _chessBoard ,  CurrentSquare.SquareState, 1, true ));
+            Pos, new Point(2, -1), _chessBoard ,  CurrentSquare.SquareState, 1, true, checkInspect ));
         squares.AddRange(CommonMovements.pathCalculator(
-            Pos, new Point(-2, 1), _chessBoard ,  CurrentSquare.SquareState, 1, true ));
+            Pos, new Point(-2, 1), _chessBoard ,  CurrentSquare.SquareState, 1, true, checkInspect ));
         squares.AddRange(CommonMovements.pathCalculator(
-            Pos, new Point(-2, -1), _chessBoard ,  CurrentSquare.SquareState, 1, true ));
+            Pos, new Point(-2, -1), _chessBoard ,  CurrentSquare.SquareState, 1, true, checkInspect ));
         
         return squares;
     }

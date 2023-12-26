@@ -1,4 +1,5 @@
-﻿using MainProject.ChessMovements;
+﻿using System.Collections.Generic;
+using MainProject.ChessMovements;
 using MainProject.ChessMovements.ChessPins;
 using MainProject.Enums;
 using Microsoft.Xna.Framework;
@@ -12,4 +13,13 @@ public class KingPiece : ChessPiece
         ChessMovement = new KingMovement(chessBoard, this);
         _pinCalculator = new NoPinPieceCalculator();
     }
+
+    public override List<Square> GetMovableSquares(bool checkInspect)
+    {
+        var baseList = base.GetMovableSquares(checkInspect);
+
+        CheckMateCalculator.CalculateThreats(this, baseList);
+        return baseList;
+    }
+
 }

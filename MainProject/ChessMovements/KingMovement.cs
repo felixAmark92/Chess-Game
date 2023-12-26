@@ -18,7 +18,7 @@ public class KingMovement : IChessMovement
         _chessBoard = chessBoard;
     }
 
-    public List<Square> GetDefaultSquares()
+    public List<Square> GetDefaultSquares(bool checkInspect)
     {
         var list = new List<Square>();
 

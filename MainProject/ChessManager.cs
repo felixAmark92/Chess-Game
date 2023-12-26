@@ -32,7 +32,7 @@ public static class ChessManager
                 SelectedPieceMovableSquares = new List<Square>();
                 return;
             }
-            SelectedPieceMovableSquares = _selectedPiece.GetMovableSquares();
+            SelectedPieceMovableSquares = _selectedPiece.GetMovableSquares(false);
             foreach (var square in SelectedPieceMovableSquares)
             {
                 square.Entity.GetComponent<Renderer>().Color = Color.Green;
@@ -42,8 +42,8 @@ public static class ChessManager
     }
 
     public static ChessBoard ChessBoard { get; } = new ChessBoard();
-    private static List<ChessPiece> BlackPieces { get; set; }
-    private static List<ChessPiece> WhitePieces { get; set; }
+    public static List<ChessPiece> BlackPieces { get; set; }
+    public static List<ChessPiece> WhitePieces { get; set; }
 
     private static ChessColor _playerTurn = ChessColor.White;
     private static ChessPiece? _selectedPiece;
@@ -59,7 +59,7 @@ public static class ChessManager
 
     public static void LoadPieces()
     {
-        var BlackPiecesEntities = new List<EntityLogic.Entity>()
+        var blackPiecesEntities = new List<EntityLogic.Entity>()
         {
             ChessPieceFactory.CreateChessPiece(ChessType.Rook, ChessColor.Black, new Point(7, 0)),
             ChessPieceFactory.CreateChessPiece(ChessType.Rook, ChessColor.Black, new Point(0, 0)),
@@ -74,12 +74,12 @@ public static class ChessManager
         for (int i = 0; i < 8; i++)
         {
             var piece = ChessPieceFactory.CreateChessPiece(ChessType.Pawn, ChessColor.Black, new Point(i, 1));
-            BlackPiecesEntities.Add(piece);
+            blackPiecesEntities.Add(piece);
         }
         
         
 
-        var WhitePiecesEntities = new List<EntityLogic.Entity>()
+        var whitePiecesEntities = new List<EntityLogic.Entity>()
         {
             ChessPieceFactory.CreateChessPiece(ChessType.Rook, ChessColor.White, new Point(7, 7)),
             ChessPieceFactory.CreateChessPiece(ChessType.Rook, ChessColor.White, new Point(0, 7)),
@@ -94,16 +94,16 @@ public static class ChessManager
         for (int i = 0; i < 8; i++)
         {
             var piece = ChessPieceFactory.CreateChessPiece(ChessType.Pawn, ChessColor.White, new Point(i, 6));
-            WhitePiecesEntities.Add(piece);
+            whitePiecesEntities.Add(piece);
         }
 
-        foreach (var entity in BlackPiecesEntities)
+        foreach (var entity in blackPiecesEntities)
         {
             entity.GetComponent<Interactive>().SetInactive();
         }
 
-        WhitePieces = WhitePiecesEntities.Select(e => e.GetBehaviour<ChessPiece>()).ToList();
-        BlackPieces = BlackPiecesEntities.Select(e => e.GetBehaviour<ChessPiece>()).ToList();
+        WhitePieces = whitePiecesEntities.Select(e => e.GetBehaviour<ChessPiece>()).ToList();
+        BlackPieces = blackPiecesEntities.Select(e => e.GetBehaviour<ChessPiece>()).ToList();
     }
     
     
@@ -145,13 +145,13 @@ public static class ChessManager
     {
         if (_playerTurn == ChessColor.Black)
         {
-            CheckCalculator.CalculateChecks(BlackPieces);
+            CheckMateCalculator.CalculateChecks(BlackPieces);
             SwitchActivePieces(BlackPieces, WhitePieces);
             CalculatePins(WhitePieces, BlackPieces);
         }
         else
         {
-            CheckCalculator.CalculateChecks(WhitePieces);
+            CheckMateCalculator.CalculateChecks(WhitePieces);
             SwitchActivePieces(WhitePieces, BlackPieces);
             CalculatePins(BlackPieces, WhitePieces);
         }

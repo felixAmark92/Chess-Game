@@ -18,17 +18,17 @@ public class BishopMovement : IChessMovement
         _bishopPiece = bishopPiece;
         _chessBoard = chessBoard;
     }
-    public List<Square> GetDefaultSquares()
+    public List<Square> GetDefaultSquares(bool checkInspect)
     {
         var squares = new List<Square>();
         squares.AddRange( 
-            CommonMovements.pathCalculator(Pos, new Point( -1, -1), _chessBoard, CurrentSquare.SquareState ));
+            CommonMovements.pathCalculator(Pos, new Point( -1, -1), _chessBoard, CurrentSquare.SquareState, checkInspect));
         squares.AddRange( 
-            CommonMovements.pathCalculator(Pos, new Point( 1, 1), _chessBoard, CurrentSquare.SquareState ));
+            CommonMovements.pathCalculator(Pos, new Point( 1, 1), _chessBoard, CurrentSquare.SquareState, checkInspect ));
         squares.AddRange( 
-            CommonMovements.pathCalculator(Pos, new Point( 1, -1), _chessBoard, CurrentSquare.SquareState ));
+            CommonMovements.pathCalculator(Pos, new Point( 1, -1), _chessBoard, CurrentSquare.SquareState, checkInspect ));
         squares.AddRange( 
-            CommonMovements.pathCalculator(Pos, new Point( -1, 1), _chessBoard, CurrentSquare.SquareState ));
+            CommonMovements.pathCalculator(Pos, new Point( -1, 1), _chessBoard, CurrentSquare.SquareState, checkInspect ));
 
 
         return squares;

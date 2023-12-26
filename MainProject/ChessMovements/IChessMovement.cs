@@ -6,5 +6,5 @@ namespace MainProject.ChessMovements;
 
 public interface IChessMovement
 {
-    List<Square> GetDefaultSquares();
+    List<Square> GetDefaultSquares(bool checkInspect);
 }

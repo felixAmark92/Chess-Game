@@ -23,10 +23,10 @@ public class QueenMovement : IChessMovement
     }
 
     
-    public List<Square> GetDefaultSquares()
+    public List<Square> GetDefaultSquares(bool checkInspect)
     {
-        var list = _bishopMovement.GetDefaultSquares();
-        var list2 = _rookMovement.GetDefaultSquares();
+        var list = _bishopMovement.GetDefaultSquares(checkInspect);
+        var list2 = _rookMovement.GetDefaultSquares(checkInspect);
         
         list.AddRange(list2);
 

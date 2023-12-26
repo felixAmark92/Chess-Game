@@ -21,7 +21,7 @@ public class PawnMovement : IChessMovement
         _chessBoard = chessBoard;
     }
     
-    public List<Square> GetDefaultSquares()
+    public List<Square> GetDefaultSquares(bool checkInspect)
     {
         var squares = new List<Square>();
         Point direction = _pawnPiece.ChessColor == ChessColor.Black 
@@ -34,7 +34,8 @@ public class PawnMovement : IChessMovement
                 _chessBoard, 
                 CurrentSquare.SquareState,
                 2,
-                false));
+                false,
+                checkInspect));
         }
         else
         {
@@ -45,7 +46,8 @@ public class PawnMovement : IChessMovement
                 CurrentSquare.
                     SquareState, 
                 1, 
-                false));
+                false,
+                checkInspect));
         }
 
         var sideway1 = Pos + direction + new Point(1, 0);
@@ -55,6 +57,11 @@ public class PawnMovement : IChessMovement
                 _chessBoard.Squares[sideway1.Y, sideway1.X].SquareState != SquareState.NotOccupied)
             {
                 squares.Add(_chessBoard.Squares[sideway1.Y, sideway1.X]);
+                if (_chessBoard.Squares[sideway1.Y, sideway1.X].OccupyingChessPiece is KingPiece && checkInspect)
+                {
+                    CheckMateCalculator.KingIsChecked = true;
+                    CheckMateCalculator.AttackerSquares.Add(CurrentSquare);
+                }
                 
             }
         }

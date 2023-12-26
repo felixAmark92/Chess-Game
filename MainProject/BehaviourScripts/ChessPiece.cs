@@ -61,14 +61,13 @@ public abstract class ChessPiece : Behaviour
         {
             Console.WriteLine($"{Entity.Id}: {Entity.GetComponent<Renderer>().LayerDepth}");
 
-            var list = GetMovableSquares().Select(s => s.Entity).ToList();
             ChessManager.SelectedPiece = this;
         };
     }
 
-    public List<Square> GetMovableSquares()
+    public virtual List<Square> GetMovableSquares(bool checkInspect)
     {
-        var movableSquares = ChessMovement.GetDefaultSquares();
+        var movableSquares = ChessMovement.GetDefaultSquares(checkInspect);
         var copy = new List<Square>(movableSquares);
 
         if (IsPinned)
@@ -82,16 +81,16 @@ public abstract class ChessPiece : Behaviour
             }
         }
 
-        if (CheckCalculator.KingIsChecked && this is not KingPiece)
+        if (CheckMateCalculator.KingIsChecked && this is not KingPiece)
         {
-            if (CheckCalculator.AttackerSquares.Count > 1)
+            if (CheckMateCalculator.AttackerSquares.Count > 1)
             {
                 return new List<Square>();
             }
 
             foreach (var square in copy)
             {
-                if (!CheckCalculator.AttackerPaths[0].Contains(square) && CheckCalculator.AttackerSquares[0] != square)
+                if (!CheckMateCalculator.AttackerPaths[0].Contains(square) && CheckMateCalculator.AttackerSquares[0] != square)
                 {
                     movableSquares.Remove(square);
                 }
@@ -101,12 +100,16 @@ public abstract class ChessPiece : Behaviour
         return movableSquares;
     }
 
-    public IEnumerable<Square> GetThreats(KingPiece kingPiece)
+    public void RemoveSquaresThatAreThreats(List<Square> kingSquares)
     {
-        var kingSquares = kingPiece.GetMovableSquares();
-        var thisSquares = GetMovableSquares();
+        var thisSquares = GetMovableSquares(false);
 
-        return kingSquares.Where(s => thisSquares.Contains(s));
+        var squares = kingSquares.Where(s => thisSquares.Contains(s)).ToList();
+
+        foreach (var square in squares)
+        {
+            kingSquares.Remove(square);
+        }
     }
 
     public void CalculatePin()

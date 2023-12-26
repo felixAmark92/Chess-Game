@@ -14,7 +14,8 @@ public static class CommonMovements
         Point pos, 
         Point incrementation, 
         ChessBoard chessBoard, 
-        SquareState squareState)
+        SquareState squareState,
+        bool checkInspect)
     {
         var squares = new List<Square>();
         var originalPos = pos;
@@ -35,9 +36,13 @@ public static class CommonMovements
                 squares.Add(chessBoard.Squares[pos.Y, pos.X]);
                 if (chessBoard.Squares[pos.Y, pos.X].OccupyingChessPiece is KingPiece )
                 {
-                    CheckCalculator.AttackerPaths.Add(new List<Square>(squares));
-                    CheckCalculator.KingIsChecked = true;
-                    CheckCalculator.AttackerSquares.Add(chessBoard.Squares[originalPos.Y, originalPos.X]);
+                    if (checkInspect)
+                    {
+                        CheckMateCalculator.AttackerPaths.Add(new List<Square>(squares));
+                        CheckMateCalculator.KingIsChecked = true;
+                        CheckMateCalculator.AttackerSquares.Add(chessBoard.Squares[originalPos.Y, originalPos.X]);
+                    }
+
                     pos += incrementation;
                     if (chessBoard.InsideChessBoard(pos))
                     {
@@ -58,7 +63,8 @@ public static class CommonMovements
         ChessBoard chessBoard, 
         SquareState squareState,
         int limit,
-        bool aggressive)
+        bool aggressive,
+        bool checkInspect)
     {
         var squares = new List<Square>();
         
@@ -78,11 +84,15 @@ public static class CommonMovements
                 {
                     squares.Add(chessBoard.Squares[pos.Y, pos.X]);
 
-                    if (chessBoard.Squares[pos.Y, pos.X].OccupyingChessPiece is KingPiece )
+                    if (chessBoard.Squares[pos.Y, pos.X].OccupyingChessPiece is KingPiece)
                     {
-                        CheckCalculator.AttackerPaths.Add(new List<Square>(squares));
-                        CheckCalculator.KingIsChecked = true;
-                        CheckCalculator.AttackerSquares.Add(chessBoard.Squares[originalPos.Y, originalPos.X]);
+                        if (checkInspect)
+                        {
+                            CheckMateCalculator.AttackerPaths.Add(new List<Square>(squares));
+                            CheckMateCalculator.KingIsChecked = true;
+                            CheckMateCalculator.AttackerSquares.Add(chessBoard.Squares[originalPos.Y, originalPos.X]);
+                        }
+
                         pos += incrementation;
                         if (chessBoard.InsideChessBoard(pos))
                         {
