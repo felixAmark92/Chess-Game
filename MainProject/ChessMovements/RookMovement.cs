@@ -24,14 +24,18 @@ public class RookMovement : IChessMovement
     {
         var movableSquares = new List<Square>();
 
-        CommonMovements.StraightLineMovement(
-            Pos, () => new Point(1, 0), _chessBoard, movableSquares, CurrentSquare.SquareState);
-        CommonMovements.StraightLineMovement(
-            Pos, () => new Point(-1, 0), _chessBoard, movableSquares, CurrentSquare.SquareState);
-        CommonMovements.StraightLineMovement(
-            Pos, () => new Point(0, -1), _chessBoard, movableSquares, CurrentSquare.SquareState);
-        CommonMovements.StraightLineMovement(
-            Pos, () => new Point(0, 1), _chessBoard, movableSquares, CurrentSquare.SquareState);
+        movableSquares.AddRange(
+        CommonMovements.pathCalculator(
+            Pos, new Point(1, 0), _chessBoard, CurrentSquare.SquareState));
+        movableSquares.AddRange(
+            CommonMovements.pathCalculator(
+                Pos, new Point(-1, 0), _chessBoard, CurrentSquare.SquareState));
+        movableSquares.AddRange(
+            CommonMovements.pathCalculator(
+                Pos, new Point(0, 1), _chessBoard, CurrentSquare.SquareState));
+        movableSquares.AddRange(
+            CommonMovements.pathCalculator(
+                Pos, new Point(0, -1), _chessBoard, CurrentSquare.SquareState));
 
         return movableSquares;
     }

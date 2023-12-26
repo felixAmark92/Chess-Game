@@ -10,15 +10,16 @@ namespace MainProject.ChessMovements;
 
 public static class CommonMovements
 {
-    public static void StraightLineMovement(
+    public static List<Square> pathCalculator(
         Point pos, 
-        Func<Point> incrementation, 
+        Point incrementation, 
         ChessBoard chessBoard, 
-        List<Square> squares,
         SquareState squareState)
     {
+        var squares = new List<Square>();
+        var originalPos = pos;
 
-        pos += incrementation();
+        pos += incrementation;
         while (chessBoard.InsideChessBoard(pos))
         {
             if (chessBoard.Squares[pos.Y, pos.X].SquareState == SquareState.NotOccupied)
@@ -32,23 +33,38 @@ public static class CommonMovements
             else 
             {
                 squares.Add(chessBoard.Squares[pos.Y, pos.X]);
+                if (chessBoard.Squares[pos.Y, pos.X].OccupyingChessPiece is KingPiece )
+                {
+                    CheckCalculator.AttackerPaths.Add(new List<Square>(squares));
+                    CheckCalculator.KingIsChecked = true;
+                    CheckCalculator.AttackerSquares.Add(chessBoard.Squares[originalPos.Y, originalPos.X]);
+                    pos += incrementation;
+                    if (chessBoard.InsideChessBoard(pos))
+                    {
+                        squares.Add(chessBoard.Squares[pos.Y, pos.X]);
+                    }
+                }
                 break;
             }
-            pos += incrementation();
+            pos += incrementation;
         }
+
+        return squares;
     }
     
-    public static void StraightLineMovement(
+    public static List<Square> pathCalculator(
         Point pos, 
-        Func<Point> incrementation, 
+        Point incrementation, 
         ChessBoard chessBoard, 
-        List<Square> squares,
         SquareState squareState,
         int limit,
         bool aggressive)
     {
+        var squares = new List<Square>();
+        
         var i = 0;
-        pos += incrementation();
+        var originalPos = pos;
+        pos += incrementation;
         while (chessBoard.InsideChessBoard(pos) && i < limit)
         {
             i++;
@@ -61,12 +77,25 @@ public static class CommonMovements
                 if (aggressive && chessBoard.Squares[pos.Y, pos.X].SquareState != squareState)
                 {
                     squares.Add(chessBoard.Squares[pos.Y, pos.X]);
+
+                    if (chessBoard.Squares[pos.Y, pos.X].OccupyingChessPiece is KingPiece )
+                    {
+                        CheckCalculator.AttackerPaths.Add(new List<Square>(squares));
+                        CheckCalculator.KingIsChecked = true;
+                        CheckCalculator.AttackerSquares.Add(chessBoard.Squares[originalPos.Y, originalPos.X]);
+                        pos += incrementation;
+                        if (chessBoard.InsideChessBoard(pos))
+                        {
+                            squares.Add(chessBoard.Squares[pos.Y, pos.X]);
+                        }
+                    }
                 }
                 break;
             }
-            
-            pos += incrementation();
+            pos += incrementation;
         }
+
+        return squares;
     }
     
     public static bool PinCalculator(
@@ -108,7 +137,4 @@ public static class CommonMovements
 
         return false;
     }
-    
-    
-    
 }

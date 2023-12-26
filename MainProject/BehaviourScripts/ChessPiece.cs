@@ -12,86 +12,105 @@ namespace MainProject.BehaviourScripts;
 
 public abstract class ChessPiece : Behaviour
 {
-     private readonly ChessBoard _chessBoard;
-     private Square _currentSquare;
-     public Square CurrentSquare
-     {
-          get => _currentSquare;
-          set
-          {
-               if (_currentSquare is null)
-               {
-                    _currentSquare = value;
-                    _currentSquare.OccupyingChessPiece = this;
-                    return;
-               }
-               _currentSquare.OccupyingChessPiece = null;
-               _currentSquare = value;
-               _currentSquare.OccupyingChessPiece = this;
+    private readonly ChessBoard _chessBoard;
+    private Square _currentSquare;
 
-          }
-     }
-     
-     protected IChessMovement ChessMovement { get; set; }
-     protected IPinCalculator _pinCalculator { get; set; } = new NoPinPieceCalculator();
-     public ChessColor ChessColor { get; }
+    public Square CurrentSquare
+    {
+        get => _currentSquare;
+        set
+        {
+            if (_currentSquare is null)
+            {
+                _currentSquare = value;
+                _currentSquare.OccupyingChessPiece = this;
+                return;
+            }
 
-     public bool IsPinned;
-     public List<Square> ValidPinSquares; 
+            _currentSquare.OccupyingChessPiece = null;
+            _currentSquare = value;
+            _currentSquare.OccupyingChessPiece = this;
+        }
+    }
 
-     public Point Pos => CurrentSquare.ChessPosition.Position;
+    protected IChessMovement ChessMovement { get; set; }
+    protected IPinCalculator _pinCalculator { get; set; } = new NoPinPieceCalculator();
+    public ChessColor ChessColor { get; }
 
-     public ChessPiece(ChessColor chessColor, ChessBoard chessBoard, Point pos)
-     {
-          ChessColor = chessColor;
-          CurrentSquare = chessBoard.Squares[pos.Y, pos.X];
-          _chessBoard = chessBoard;
-     }
+    public bool IsPinned;
+    public List<Square> ValidPinSquares;
 
-     public override void ComponentsInit()
-     {
-          Entity.GetComponent<Transform>().Position =
-               new Vector2(_currentSquare.ChessPosition.Position.X * _chessBoard.SquaresSize, 
-                    _currentSquare.ChessPosition.Position.Y * _chessBoard.SquaresSize);
-          
-          Entity.GetComponent<Renderer>().LayerDepth = 1f;
-          
-          Entity.GetComponent<Interactive>().OnLeftClick += () =>
-          {
-               Console.WriteLine($"{Entity.Id}: {Entity.GetComponent<Renderer>().LayerDepth}");
-               
-               var list = GetMovableSquares().Select(s => s.Entity).ToList();
-               ChessManager.SelectedPiece = this;
-          };
-     }
+    public Point Pos => CurrentSquare.ChessPosition.Position;
 
-     public List<Square> GetMovableSquares()
-     {
-          var movableSquares = ChessMovement.GetDefaultSquares();
+    public ChessPiece(ChessColor chessColor, ChessBoard chessBoard, Point pos)
+    {
+        ChessColor = chessColor;
+        CurrentSquare = chessBoard.Squares[pos.Y, pos.X];
+        _chessBoard = chessBoard;
+    }
 
-          if (IsPinned)
-          {
-               foreach (var square in ChessMovement.GetDefaultSquares())
-               {
-                    if (!ValidPinSquares.Contains(square))
-                    {
-                         movableSquares.Remove(square);
-                    }
-               }
-          }
+    public override void ComponentsInit()
+    {
+        Entity.GetComponent<Transform>().Position =
+            new Vector2(_currentSquare.ChessPosition.Position.X * _chessBoard.SquaresSize,
+                _currentSquare.ChessPosition.Position.Y * _chessBoard.SquaresSize);
 
-          return movableSquares;
-     }
+        Entity.GetComponent<Renderer>().LayerDepth = 1f;
 
-     public IEnumerable<Square> GetThreats(KingPiece kingPiece)
-     {
-          var kingSquares = kingPiece.GetMovableSquares();
-          var thisSquares = GetMovableSquares();
+        Entity.GetComponent<Interactive>().OnLeftClick += () =>
+        {
+            Console.WriteLine($"{Entity.Id}: {Entity.GetComponent<Renderer>().LayerDepth}");
 
-          return kingSquares.Where(s => thisSquares.Contains(s));
-     }
-     public void CalculatePin()
-     {
-          _pinCalculator.CalculatePin();
-     }
+            var list = GetMovableSquares().Select(s => s.Entity).ToList();
+            ChessManager.SelectedPiece = this;
+        };
+    }
+
+    public List<Square> GetMovableSquares()
+    {
+        var movableSquares = ChessMovement.GetDefaultSquares();
+        var copy = new List<Square>(movableSquares);
+
+        if (IsPinned)
+        {
+            foreach (var square in copy)
+            {
+                if (!ValidPinSquares.Contains(square))
+                {
+                    movableSquares.Remove(square);
+                }
+            }
+        }
+
+        if (CheckCalculator.KingIsChecked && this is not KingPiece)
+        {
+            if (CheckCalculator.AttackerSquares.Count > 1)
+            {
+                return new List<Square>();
+            }
+
+            foreach (var square in copy)
+            {
+                if (!CheckCalculator.AttackerPaths[0].Contains(square) && CheckCalculator.AttackerSquares[0] != square)
+                {
+                    movableSquares.Remove(square);
+                }
+            }
+        }
+
+        return movableSquares;
+    }
+
+    public IEnumerable<Square> GetThreats(KingPiece kingPiece)
+    {
+        var kingSquares = kingPiece.GetMovableSquares();
+        var thisSquares = GetMovableSquares();
+
+        return kingSquares.Where(s => thisSquares.Contains(s));
+    }
+
+    public void CalculatePin()
+    {
+        _pinCalculator.CalculatePin();
+    }
 }

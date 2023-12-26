@@ -21,10 +21,15 @@ public class BishopMovement : IChessMovement
     public List<Square> GetDefaultSquares()
     {
         var squares = new List<Square>();
-        CommonMovements.StraightLineMovement(Pos, () => new Point( -1, -1), _chessBoard, squares, CurrentSquare.SquareState );
-        CommonMovements.StraightLineMovement(Pos, () => new Point( 1, 1), _chessBoard, squares, CurrentSquare.SquareState );
-        CommonMovements.StraightLineMovement(Pos, () => new Point( -1, 1), _chessBoard, squares, CurrentSquare.SquareState );
-        CommonMovements.StraightLineMovement(Pos, () => new Point( 1, -1), _chessBoard, squares, CurrentSquare.SquareState );
+        squares.AddRange( 
+            CommonMovements.pathCalculator(Pos, new Point( -1, -1), _chessBoard, CurrentSquare.SquareState ));
+        squares.AddRange( 
+            CommonMovements.pathCalculator(Pos, new Point( 1, 1), _chessBoard, CurrentSquare.SquareState ));
+        squares.AddRange( 
+            CommonMovements.pathCalculator(Pos, new Point( 1, -1), _chessBoard, CurrentSquare.SquareState ));
+        squares.AddRange( 
+            CommonMovements.pathCalculator(Pos, new Point( -1, 1), _chessBoard, CurrentSquare.SquareState ));
+
 
         return squares;
     }

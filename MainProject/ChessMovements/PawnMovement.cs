@@ -28,24 +28,24 @@ public class PawnMovement : IChessMovement
             ? new Point(0, 1) : new Point(0, -1);
         if (!HaveMoved)
         {
-            CommonMovements.StraightLineMovement(
-                Pos, ()=> direction, 
+            squares.AddRange(
+            CommonMovements.pathCalculator(
+                Pos, direction, 
                 _chessBoard, 
-                squares, 
                 CurrentSquare.SquareState,
                 2,
-                false);
+                false));
         }
         else
         {
-            CommonMovements.StraightLineMovement(
-                Pos, ()=> direction, 
+            squares.AddRange(
+            CommonMovements.pathCalculator(
+                Pos, direction, 
                 _chessBoard, 
-                squares, 
                 CurrentSquare.
                     SquareState, 
                 1, 
-                false);
+                false));
         }
 
         var sideway1 = Pos + direction + new Point(1, 0);
