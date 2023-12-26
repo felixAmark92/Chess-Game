@@ -1,5 +1,6 @@
-﻿using MainProject.Behaviours;
-using MainProject.Behaviours.ChessPieces;
+﻿using System.Collections.Generic;
+using MainProject.BehaviourScripts;
+using MainProject.BehaviourScripts.ChessPieces;
 using Microsoft.Xna.Framework;
 
 namespace MainProject.ChessMovements.ChessPins;
@@ -19,7 +20,7 @@ public class BishopPinCalculator: IPinCalculator
         _chessBoard = chessBoard;
     }
 
-    public ChessPin CalculatePin()
+    public void CalculatePin()
     {
         Point[] points =
         {
@@ -31,18 +32,12 @@ public class BishopPinCalculator: IPinCalculator
 
         foreach (var point in points)
         {
-            if (CommonMovements.StraightLinePin(
-                    Pos,
-                    () => point,
-                    _chessBoard,
-                    CurrentSquare.SquareState,
-                    out ChessPin chessPin))
+            if (CommonMovements.PinCalculator(Pos, point, _chessBoard, CurrentSquare.SquareState))
             {
-                return chessPin;
+                return;
             }
         }
 
-        return null;
 
     }
 }

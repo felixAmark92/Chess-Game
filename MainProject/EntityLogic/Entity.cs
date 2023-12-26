@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using MainProject.Behaviours;
+using MainProject.BehaviourScripts;
 using MainProject.Components;
 
-namespace MainProject.Entity;
+namespace MainProject.EntityLogic;
 
 public class Entity
 {

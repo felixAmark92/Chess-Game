@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using MainProject.Behaviours;
-using MainProject.Behaviours.ChessPieces;
+using MainProject.BehaviourScripts;
+using MainProject.BehaviourScripts.ChessPieces;
 using MainProject.Enums;
 using Microsoft.Xna.Framework;
 
@@ -21,7 +21,7 @@ public class PawnMovement : IChessMovement
         _chessBoard = chessBoard;
     }
     
-    public List<Square> GetMovableSquares()
+    public List<Square> GetDefaultSquares()
     {
         var squares = new List<Square>();
         Point direction = _pawnPiece.ChessColor == ChessColor.Black 

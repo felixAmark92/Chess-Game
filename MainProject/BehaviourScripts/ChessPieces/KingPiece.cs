@@ -1,8 +1,9 @@
 ﻿using MainProject.ChessMovements;
+using MainProject.ChessMovements.ChessPins;
 using MainProject.Enums;
 using Microsoft.Xna.Framework;
 
-namespace MainProject.Behaviours.ChessPieces;
+namespace MainProject.BehaviourScripts.ChessPieces;
 
 public class KingPiece : ChessPiece
 {

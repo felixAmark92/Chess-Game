@@ -1,8 +1,8 @@
-﻿namespace MainProject.Behaviours;
+﻿namespace MainProject.BehaviourScripts;
 
 public abstract class Behaviour
 {
-    public Entity.Entity Entity { get; set; }
+    public EntityLogic.Entity Entity { get; set; }
 
     public Behaviour()
     {

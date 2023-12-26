@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using MainProject.Behaviours;
-using MainProject.Behaviours.ChessPieces;
+using MainProject.BehaviourScripts;
+using MainProject.BehaviourScripts.ChessPieces;
 using Microsoft.Xna.Framework;
 
 namespace MainProject.ChessMovements;
@@ -18,7 +18,7 @@ public class BishopMovement : IChessMovement
         _bishopPiece = bishopPiece;
         _chessBoard = chessBoard;
     }
-    public List<Square> GetMovableSquares()
+    public List<Square> GetDefaultSquares()
     {
         var squares = new List<Square>();
         CommonMovements.StraightLineMovement(Pos, () => new Point( -1, -1), _chessBoard, squares, CurrentSquare.SquareState );

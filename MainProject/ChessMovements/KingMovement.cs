@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using MainProject.Behaviours;
-using MainProject.Behaviours.ChessPieces;
+using MainProject.BehaviourScripts;
+using MainProject.BehaviourScripts.ChessPieces;
 using Microsoft.Xna.Framework;
 
 namespace MainProject.ChessMovements;
@@ -18,7 +18,7 @@ public class KingMovement : IChessMovement
         _chessBoard = chessBoard;
     }
 
-    public List<Square> GetMovableSquares()
+    public List<Square> GetDefaultSquares()
     {
         var list = new List<Square>();
 

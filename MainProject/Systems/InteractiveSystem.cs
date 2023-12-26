@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using MainProject.Components;
-using MainProject.Entity;
+using MainProject.EntityLogic;
 
 namespace MainProject.Systems;
 

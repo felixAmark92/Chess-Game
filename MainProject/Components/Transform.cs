@@ -9,7 +9,7 @@ public class Transform : Component
     
     //for now no need for rotation and scale
     
-    public Transform(Entity.Entity entity) : base(entity)
+    public Transform(EntityLogic.Entity entity) : base(entity)
     {
     }
 }

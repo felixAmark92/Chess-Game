@@ -13,7 +13,7 @@ public class Renderer : Component
     public float LayerDepth { get; set; } = 0f;
 
 
-    public Renderer(Entity.Entity entity) : base(entity)
+    public Renderer(EntityLogic.Entity entity) : base(entity)
     {
         RenderingSystem.NotifyChanges();
     }

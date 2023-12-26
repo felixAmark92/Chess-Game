@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using MainProject.Behaviours;
-using MainProject.Behaviours.ChessPieces;
+using MainProject.BehaviourScripts;
+using MainProject.BehaviourScripts.ChessPieces;
 using MainProject.ChessMovements.ChessPins;
 using MainProject.Enums;
 using Microsoft.Xna.Framework;
@@ -15,8 +15,7 @@ public static class CommonMovements
         Func<Point> incrementation, 
         ChessBoard chessBoard, 
         List<Square> squares,
-        SquareState squareState
-        )
+        SquareState squareState)
     {
 
         pos += incrementation();
@@ -46,8 +45,7 @@ public static class CommonMovements
         List<Square> squares,
         SquareState squareState,
         int limit,
-        bool aggressive
-    )
+        bool aggressive)
     {
         var i = 0;
         pos += incrementation();
@@ -71,30 +69,25 @@ public static class CommonMovements
         }
     }
     
-    public static bool StraightLinePin(
+    public static bool PinCalculator(
         Point pos, 
-        Func<Point> incrementation, 
+        Point incrementation, 
         ChessBoard chessBoard, 
-        SquareState squareState, 
-        out ChessPin chessPin
-    )
+        SquareState squareState)
     {
-        var squares = new List<Square>();
-        squares.Add(chessBoard.Squares[pos.Y, pos.X]);
-        ChessPiece? pinnedPiece = null;
-        chessPin = new ChessPin();
-
-        pos += incrementation();
+        ChessPiece pinnedPiece = null;
+        var chessPin = new List<Square>();
+        chessPin.Add(chessBoard.Squares[pos.Y, pos.X]);
+        pos += incrementation;
         while (chessBoard.InsideChessBoard(pos))
         {
             if (chessBoard.Squares[pos.Y, pos.X].SquareState == SquareState.NotOccupied)
             {
-                squares.Add(chessBoard.Squares[pos.Y, pos.X]);
+                chessPin.Add(chessBoard.Squares[pos.Y, pos.X]);
             }
             else if (chessBoard.Squares[pos.Y, pos.X].SquareState == squareState)
             {
                 return false;
-
             }
             else if (pinnedPiece is null)
             {
@@ -102,17 +95,15 @@ public static class CommonMovements
             }
             else if (chessBoard.Squares[pos.Y, pos.X].OccupyingChessPiece is KingPiece)
             {
-                chessPin.PinnedPiece = pinnedPiece;
-                chessPin.ViableSquares = squares;
-
+                pinnedPiece.IsPinned = true;
+                pinnedPiece.ValidPinSquares = chessPin;
                 return true;
             }
             else
             {
                 return false;
             }
-
-            pos += incrementation();
+            pos += incrementation;
         }
 
         return false;

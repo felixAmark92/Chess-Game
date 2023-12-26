@@ -2,9 +2,9 @@
 
 public class Component
 {
-    private readonly Entity.Entity _entity;
+    private readonly EntityLogic.Entity _entity;
 
-    public Component(Entity.Entity entity)
+    public Component(EntityLogic.Entity entity)
     {
         _entity = entity;
     }

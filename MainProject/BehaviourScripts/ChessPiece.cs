@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using MainProject.BehaviourScripts.ChessPieces;
 using MainProject.ChessMovements;
 using MainProject.ChessMovements.ChessPins;
 using MainProject.Components;
 using MainProject.Enums;
 using Microsoft.Xna.Framework;
 
-namespace MainProject.Behaviours.ChessPieces;
+namespace MainProject.BehaviourScripts;
 
 public abstract class ChessPiece : Behaviour
 {
@@ -32,9 +33,11 @@ public abstract class ChessPiece : Behaviour
      }
      
      protected IChessMovement ChessMovement { get; set; }
-
      protected IPinCalculator _pinCalculator { get; set; } = new NoPinPieceCalculator();
      public ChessColor ChessColor { get; }
+
+     public bool IsPinned;
+     public List<Square> ValidPinSquares; 
 
      public Point Pos => CurrentSquare.ChessPosition.Position;
 
@@ -58,15 +61,26 @@ public abstract class ChessPiece : Behaviour
                Console.WriteLine($"{Entity.Id}: {Entity.GetComponent<Renderer>().LayerDepth}");
                
                var list = GetMovableSquares().Select(s => s.Entity).ToList();
-
                ChessManager.SelectedPiece = this;
-               ChessManager.SetMovableSquares(list);
           };
      }
 
      public List<Square> GetMovableSquares()
      {
-          return ChessMovement.GetMovableSquares();
+          var movableSquares = ChessMovement.GetDefaultSquares();
+
+          if (IsPinned)
+          {
+               foreach (var square in ChessMovement.GetDefaultSquares())
+               {
+                    if (!ValidPinSquares.Contains(square))
+                    {
+                         movableSquares.Remove(square);
+                    }
+               }
+          }
+
+          return movableSquares;
      }
 
      public IEnumerable<Square> GetThreats(KingPiece kingPiece)
@@ -76,12 +90,8 @@ public abstract class ChessPiece : Behaviour
 
           return kingSquares.Where(s => thisSquares.Contains(s));
      }
-     public ChessPin? GetChessPin()
+     public void CalculatePin()
      {
-          return _pinCalculator.CalculatePin();
+          _pinCalculator.CalculatePin();
      }
-     
-
-     
-
 }

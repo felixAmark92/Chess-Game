@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
-using MainProject.Behaviours.ChessPieces;
+using MainProject.BehaviourScripts.ChessPieces;
 using MainProject.Components;
 using MainProject.Enums;
 using Microsoft.Xna.Framework;
 
-namespace MainProject.Behaviours;
+namespace MainProject.BehaviourScripts;
 
 public class Square : Behaviour
 {
@@ -43,10 +43,9 @@ public class Square : Behaviour
         Entity.GetComponent<Interactive>().OnLeftClick += () =>
         {
             Console.WriteLine(Entity.Id);
-            if (ChessManager.SelectedPieceMovableSquares.Contains(Entity))
+            if (ChessManager.SelectedPieceMovableSquares.Contains(Entity.GetBehaviour<Square>()))
             {
                 ChessManager.MoveSelectedPiece(this);
-
             }
         };
     }

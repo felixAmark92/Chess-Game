@@ -2,7 +2,7 @@
 using MainProject.Enums;
 using Microsoft.Xna.Framework;
 
-namespace MainProject.Behaviours.ChessPieces;
+namespace MainProject.BehaviourScripts.ChessPieces;
 
 public class KnightPiece : ChessPiece
 {

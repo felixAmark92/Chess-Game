@@ -20,7 +20,7 @@ public class Interactive : Component
 
     public event Action OnLeftClick;
 
-    public Interactive(Entity.Entity entity) : base(entity)
+    public Interactive(EntityLogic.Entity entity) : base(entity)
     {
         if (!entity.HasComponent<Renderer>())
         {

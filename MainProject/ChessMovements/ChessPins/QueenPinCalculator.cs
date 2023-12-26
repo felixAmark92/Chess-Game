@@ -1,5 +1,5 @@
-﻿using MainProject.Behaviours;
-using MainProject.Behaviours.ChessPieces;
+﻿using MainProject.BehaviourScripts;
+using MainProject.BehaviourScripts.ChessPieces;
 using Microsoft.Xna.Framework;
 
 namespace MainProject.ChessMovements.ChessPins;
@@ -24,14 +24,9 @@ public class QueenPinCalculator : IPinCalculator
         _rookPinCalculator = new RookPinCalculator(chessBoard, queenPiece);
     }
 
-    public ChessPin CalculatePin()
+    public void CalculatePin()
     {
-        var getPin = _bishopPinCalculator.CalculatePin();
-
-        if (getPin is null)
-        {
-            return _rookPinCalculator.CalculatePin();
-        }
-        return getPin;
+        _bishopPinCalculator.CalculatePin();
+        _rookPinCalculator.CalculatePin();
     }
 }

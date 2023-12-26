@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using MainProject.Behaviours;
-using MainProject.Behaviours.ChessPieces;
+using MainProject.BehaviourScripts;
+using MainProject.BehaviourScripts.ChessPieces;
 using Microsoft.Xna.Framework;
 
 namespace MainProject.ChessMovements;
@@ -23,10 +23,10 @@ public class QueenMovement : IChessMovement
     }
 
     
-    public List<Square> GetMovableSquares()
+    public List<Square> GetDefaultSquares()
     {
-        var list = _bishopMovement.GetMovableSquares();
-        var list2 = _rookMovement.GetMovableSquares();
+        var list = _bishopMovement.GetDefaultSquares();
+        var list2 = _rookMovement.GetDefaultSquares();
         
         list.AddRange(list2);
 

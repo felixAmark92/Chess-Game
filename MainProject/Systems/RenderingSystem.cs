@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using MainProject.Components;
-using MainProject.Entity;
+using MainProject.EntityLogic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -10,7 +10,7 @@ namespace MainProject.Systems;
 
 public static class RenderingSystem
 {
-    private static IEnumerable<Entity.Entity> _renderableEntities;
+    private static IEnumerable<EntityLogic.Entity> _renderableEntities;
     
     public static void NotifyChanges()
     {

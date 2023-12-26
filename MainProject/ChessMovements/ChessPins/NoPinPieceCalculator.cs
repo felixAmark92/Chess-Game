@@ -1,11 +1,8 @@
-﻿using MainProject.ChessMovements.ChessPins;
-
-namespace MainProject.Behaviours.ChessPieces;
+﻿namespace MainProject.ChessMovements.ChessPins;
 
 public class NoPinPieceCalculator : IPinCalculator
 {
-    public ChessPin CalculatePin()
+    public void CalculatePin()
     {
-        return null;
     }
 }

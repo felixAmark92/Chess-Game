@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using MainProject.Behaviours;
-using MainProject.Behaviours.ChessPieces;
+using MainProject.BehaviourScripts;
+using MainProject.BehaviourScripts.ChessPieces;
 using Microsoft.Xna.Framework;
 
 namespace MainProject.ChessMovements.ChessPins;
@@ -20,45 +20,40 @@ public class RookPinCalculator : IPinCalculator
         _chessBoard = chessBoard;
     }
 
-    public ChessPin CalculatePin()
+    public void CalculatePin()
     {
-        if (CommonMovements.StraightLinePin(
+        if (CommonMovements.PinCalculator(
                 Pos,
-                () => new Point(1, 0),
+                 new Point(1, 0),
                 _chessBoard,
-                CurrentSquare.SquareState,
-                out ChessPin chessPin1))
+                CurrentSquare.SquareState))
         {
-            return chessPin1;
+            return;
         }
-        if (CommonMovements.StraightLinePin(
+        if (CommonMovements.PinCalculator(
                 Pos,
-                () => new Point(-1, 0),
+                new Point(-1, 0),
                 _chessBoard,
-                CurrentSquare.SquareState,
-                out ChessPin chessPin2))
+                CurrentSquare.SquareState))
         {
-            return chessPin2;
+            return;
         }
-        if (CommonMovements.StraightLinePin(
+        if (CommonMovements.PinCalculator(
                 Pos,
-                () => new Point(0, 1),
+                new Point(0, 1),
                 _chessBoard,
-                CurrentSquare.SquareState,
-                out ChessPin chessPin3))
+                CurrentSquare.SquareState))
         {
-            return chessPin3;
+            return;
         }
-        if (CommonMovements.StraightLinePin(
+        if (CommonMovements.PinCalculator(
                 Pos,
-                () => new Point(0, -1),
+                new Point(0, -1),
                 _chessBoard,
-                CurrentSquare.SquareState,
-                out ChessPin chessPin4))
+                CurrentSquare.SquareState))
         {
-            return chessPin4;
+            return;
         }
-
-        return null;
+        
     }
 }

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using MainProject.Behaviours;
-using MainProject.Behaviours.ChessPieces;
+using MainProject.BehaviourScripts;
+using MainProject.BehaviourScripts.ChessPieces;
 using MainProject.Builders;
 using MainProject.ChessMovements;
 using MainProject.Components;
@@ -44,7 +44,7 @@ public static class ChessPieceFactory
 
     };
     
-    public static Entity.Entity CreateChessPiece(ChessType chessType, ChessColor chessColor, Point pos)
+    public static EntityLogic.Entity CreateChessPiece(ChessType chessType, ChessColor chessColor, Point pos)
     {
         return EntityBuilder.Create()
             .WithComponent<Interactive>()
@@ -52,6 +52,4 @@ public static class ChessPieceFactory
             .AddBehaviour(_chessClasses[chessType](pos, chessColor))
             .Build();
     }
-
-
 }
