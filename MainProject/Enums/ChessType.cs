@@ -4,5 +4,8 @@ public enum ChessType
 {
     Rook,
     Bishop,
-    King
+    Knight,
+    Queen,
+    King,
+    Pawn
 }

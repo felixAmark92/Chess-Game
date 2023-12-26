@@ -9,7 +9,6 @@ public class RookPinCalculator : IPinCalculator
 {
     private readonly ChessBoard _chessBoard;
     private readonly ChessPiece _rookPiece;
-    public ChessPiece PinnedPiece { get; set; }
 
     private Square CurrentSquare => _rookPiece.CurrentSquare;
     private Point Pos => _rookPiece.Pos;

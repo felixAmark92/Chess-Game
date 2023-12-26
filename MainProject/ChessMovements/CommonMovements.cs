@@ -39,6 +39,38 @@ public static class CommonMovements
         }
     }
     
+    public static void StraightLineMovement(
+        Point pos, 
+        Func<Point> incrementation, 
+        ChessBoard chessBoard, 
+        List<Square> squares,
+        SquareState squareState,
+        int limit,
+        bool aggressive
+    )
+    {
+        var i = 0;
+        pos += incrementation();
+        while (chessBoard.InsideChessBoard(pos) && i < limit)
+        {
+            i++;
+            if (chessBoard.Squares[pos.Y, pos.X].SquareState == SquareState.NotOccupied)
+            {
+                squares.Add(chessBoard.Squares[pos.Y, pos.X]);
+            }
+            else
+            {
+                if (aggressive && chessBoard.Squares[pos.Y, pos.X].SquareState != squareState)
+                {
+                    squares.Add(chessBoard.Squares[pos.Y, pos.X]);
+                }
+                break;
+            }
+            
+            pos += incrementation();
+        }
+    }
+    
     public static bool StraightLinePin(
         Point pos, 
         Func<Point> incrementation, 

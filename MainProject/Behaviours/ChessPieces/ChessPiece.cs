@@ -33,7 +33,7 @@ public abstract class ChessPiece : Behaviour
      
      protected IChessMovement ChessMovement { get; set; }
 
-     protected IPinCalculator _pinCalculator { get; set; }
+     protected IPinCalculator _pinCalculator { get; set; } = new NoPinPieceCalculator();
      public ChessColor ChessColor { get; }
 
      public Point Pos => CurrentSquare.ChessPosition.Position;
@@ -57,7 +57,7 @@ public abstract class ChessPiece : Behaviour
           {
                Console.WriteLine($"{Entity.Id}: {Entity.GetComponent<Renderer>().LayerDepth}");
                
-               var list = GetMovableSquares().Select(s => s.Entity);
+               var list = GetMovableSquares().Select(s => s.Entity).ToList();
 
                ChessManager.SelectedPiece = this;
                ChessManager.SetMovableSquares(list);
@@ -67,6 +67,14 @@ public abstract class ChessPiece : Behaviour
      public List<Square> GetMovableSquares()
      {
           return ChessMovement.GetMovableSquares();
+     }
+
+     public IEnumerable<Square> GetThreats(KingPiece kingPiece)
+     {
+          var kingSquares = kingPiece.GetMovableSquares();
+          var thisSquares = GetMovableSquares();
+
+          return kingSquares.Where(s => thisSquares.Contains(s));
      }
      public ChessPin? GetChessPin()
      {

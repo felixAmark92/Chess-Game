@@ -9,9 +9,7 @@ namespace MainProject.Systems;
 public static class InteractiveSystem
 {
     private static IEnumerable<Interactive> _interactives = new List<Interactive>();
-    
     public static bool MouseIsDown { get; set; }
-
 
     public static void UpdateInteractives()
     {
@@ -30,5 +28,4 @@ public static class InteractiveSystem
             interactive.Update();
         }
     }
-    
 }

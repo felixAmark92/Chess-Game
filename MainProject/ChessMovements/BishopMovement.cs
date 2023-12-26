@@ -9,11 +9,11 @@ public class BishopMovement : IChessMovement
 {
     
     private readonly ChessBoard _chessBoard;
-    private readonly BishopPiece _bishopPiece;
+    private readonly ChessPiece _bishopPiece;
     private Square CurrentSquare => _bishopPiece.CurrentSquare;
     private Point Pos => _bishopPiece.Pos;
 
-    public BishopMovement(ChessBoard chessBoard, BishopPiece bishopPiece)
+    public BishopMovement(ChessBoard chessBoard, ChessPiece bishopPiece)
     {
         _bishopPiece = bishopPiece;
         _chessBoard = chessBoard;
