@@ -25,16 +25,16 @@ public class RookMovement : IChessMovement
         var movableSquares = new List<Square>();
 
         movableSquares.AddRange(
-        CommonMovements.pathCalculator(
+        CommonMovements.PathCalculator(
             Pos, new Point(1, 0), _chessBoard, CurrentSquare.SquareState, checkInspect));
         movableSquares.AddRange(
-            CommonMovements.pathCalculator(
+            CommonMovements.PathCalculator(
                 Pos, new Point(-1, 0), _chessBoard, CurrentSquare.SquareState, checkInspect));
         movableSquares.AddRange(
-            CommonMovements.pathCalculator(
+            CommonMovements.PathCalculator(
                 Pos, new Point(0, 1), _chessBoard, CurrentSquare.SquareState, checkInspect));
         movableSquares.AddRange(
-            CommonMovements.pathCalculator(
+            CommonMovements.PathCalculator(
                 Pos, new Point(0, -1), _chessBoard, CurrentSquare.SquareState, checkInspect));
 
         return movableSquares;

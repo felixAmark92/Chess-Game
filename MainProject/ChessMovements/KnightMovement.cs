@@ -23,21 +23,21 @@ public class KnightMovement : IChessMovement
     {
         var squares = new List<Square>();
         
-        squares.AddRange(CommonMovements.pathCalculator(
+        squares.AddRange(CommonMovements.PathCalculator(
             Pos, new Point(1, 2), _chessBoard ,  CurrentSquare.SquareState, 1, true, checkInspect ));
-        squares.AddRange(CommonMovements.pathCalculator(
+        squares.AddRange(CommonMovements.PathCalculator(
             Pos, new Point(-1, 2), _chessBoard ,  CurrentSquare.SquareState, 1, true, checkInspect ));
-        squares.AddRange(CommonMovements.pathCalculator(
+        squares.AddRange(CommonMovements.PathCalculator(
             Pos, new Point(-1, -2), _chessBoard ,  CurrentSquare.SquareState, 1, true, checkInspect ));
-        squares.AddRange(CommonMovements.pathCalculator(
+        squares.AddRange(CommonMovements.PathCalculator(
             Pos, new Point(1, -2), _chessBoard ,  CurrentSquare.SquareState, 1, true, checkInspect ));
-        squares.AddRange(CommonMovements.pathCalculator(
+        squares.AddRange(CommonMovements.PathCalculator(
             Pos, new Point(2, 1), _chessBoard ,  CurrentSquare.SquareState, 1, true, checkInspect ));
-        squares.AddRange(CommonMovements.pathCalculator(
+        squares.AddRange(CommonMovements.PathCalculator(
             Pos, new Point(2, -1), _chessBoard ,  CurrentSquare.SquareState, 1, true, checkInspect ));
-        squares.AddRange(CommonMovements.pathCalculator(
+        squares.AddRange(CommonMovements.PathCalculator(
             Pos, new Point(-2, 1), _chessBoard ,  CurrentSquare.SquareState, 1, true, checkInspect ));
-        squares.AddRange(CommonMovements.pathCalculator(
+        squares.AddRange(CommonMovements.PathCalculator(
             Pos, new Point(-2, -1), _chessBoard ,  CurrentSquare.SquareState, 1, true, checkInspect ));
         
         return squares;

@@ -10,7 +10,7 @@ namespace MainProject.ChessMovements;
 
 public static class CommonMovements
 {
-    public static List<Square> pathCalculator(
+    public static List<Square> PathCalculator(
         Point pos, 
         Point incrementation, 
         ChessBoard chessBoard, 
@@ -57,7 +57,7 @@ public static class CommonMovements
         return squares;
     }
     
-    public static List<Square> pathCalculator(
+    public static List<Square> PathCalculator(
         Point pos, 
         Point incrementation, 
         ChessBoard chessBoard, 

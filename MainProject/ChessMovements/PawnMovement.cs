@@ -29,7 +29,7 @@ public class PawnMovement : IChessMovement
         if (!HaveMoved)
         {
             squares.AddRange(
-            CommonMovements.pathCalculator(
+            CommonMovements.PathCalculator(
                 Pos, direction, 
                 _chessBoard, 
                 CurrentSquare.SquareState,
@@ -40,7 +40,7 @@ public class PawnMovement : IChessMovement
         else
         {
             squares.AddRange(
-            CommonMovements.pathCalculator(
+            CommonMovements.PathCalculator(
                 Pos, direction, 
                 _chessBoard, 
                 CurrentSquare.

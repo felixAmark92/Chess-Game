@@ -22,13 +22,13 @@ public class BishopMovement : IChessMovement
     {
         var squares = new List<Square>();
         squares.AddRange( 
-            CommonMovements.pathCalculator(Pos, new Point( -1, -1), _chessBoard, CurrentSquare.SquareState, checkInspect));
+            CommonMovements.PathCalculator(Pos, new Point( -1, -1), _chessBoard, CurrentSquare.SquareState, checkInspect));
         squares.AddRange( 
-            CommonMovements.pathCalculator(Pos, new Point( 1, 1), _chessBoard, CurrentSquare.SquareState, checkInspect ));
+            CommonMovements.PathCalculator(Pos, new Point( 1, 1), _chessBoard, CurrentSquare.SquareState, checkInspect ));
         squares.AddRange( 
-            CommonMovements.pathCalculator(Pos, new Point( 1, -1), _chessBoard, CurrentSquare.SquareState, checkInspect ));
+            CommonMovements.PathCalculator(Pos, new Point( 1, -1), _chessBoard, CurrentSquare.SquareState, checkInspect ));
         squares.AddRange( 
-            CommonMovements.pathCalculator(Pos, new Point( -1, 1), _chessBoard, CurrentSquare.SquareState, checkInspect ));
+            CommonMovements.PathCalculator(Pos, new Point( -1, 1), _chessBoard, CurrentSquare.SquareState, checkInspect ));
 
 
         return squares;
