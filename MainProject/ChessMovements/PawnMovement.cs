@@ -50,14 +50,14 @@ public class PawnMovement : IChessMovement
                 checkInspect));
         }
 
-        var sideway1 = Pos + direction + new Point(1, 0);
-        if (_chessBoard.InsideChessBoard(sideway1))
+        var rightSide = Pos + direction + new Point(1, 0);
+        if (_chessBoard.InsideChessBoard(rightSide))
         {
-            if (_chessBoard.Squares[sideway1.Y, sideway1.X].SquareState != CurrentSquare.SquareState && 
-                _chessBoard.Squares[sideway1.Y, sideway1.X].SquareState != SquareState.NotOccupied)
+            if (_chessBoard.Squares[rightSide.Y, rightSide.X].SquareState != CurrentSquare.SquareState && 
+                _chessBoard.Squares[rightSide.Y, rightSide.X].SquareState != SquareState.NotOccupied)
             {
-                squares.Add(_chessBoard.Squares[sideway1.Y, sideway1.X]);
-                if (_chessBoard.Squares[sideway1.Y, sideway1.X].OccupyingChessPiece is KingPiece && checkInspect)
+                squares.Add(_chessBoard.Squares[rightSide.Y, rightSide.X]);
+                if (_chessBoard.Squares[rightSide.Y, rightSide.X].OccupyingChessPiece is KingPiece && checkInspect)
                 {
                     CheckMateCalculator.KingIsChecked = true;
                     CheckMateCalculator.AttackerSquares.Add(CurrentSquare);
@@ -66,14 +66,18 @@ public class PawnMovement : IChessMovement
             }
         }
         
-        var sideway2 = Pos + direction + new Point(-1, 0);
-        if (_chessBoard.InsideChessBoard(sideway2))
+        var leftSide = Pos + direction + new Point(-1, 0);
+        if (_chessBoard.InsideChessBoard(leftSide))
         {
-            if (_chessBoard.Squares[sideway2.Y, sideway2.X].SquareState != CurrentSquare.SquareState && 
-                _chessBoard.Squares[sideway2.Y, sideway2.X].SquareState != SquareState.NotOccupied)
+            if (_chessBoard.Squares[leftSide.Y, leftSide.X].SquareState != CurrentSquare.SquareState && 
+                _chessBoard.Squares[leftSide.Y, leftSide.X].SquareState != SquareState.NotOccupied)
             {
-                squares.Add(_chessBoard.Squares[sideway2.Y, sideway2.X]);
-                
+                squares.Add(_chessBoard.Squares[leftSide.Y, leftSide.X]);
+                if (_chessBoard.Squares[rightSide.Y, rightSide.X].OccupyingChessPiece is KingPiece && checkInspect)
+                {
+                    CheckMateCalculator.KingIsChecked = true;
+                    CheckMateCalculator.AttackerSquares.Add(CurrentSquare);
+                }
             }
         }
 

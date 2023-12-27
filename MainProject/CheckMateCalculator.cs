@@ -38,8 +38,14 @@ public static class CheckMateCalculator
         {
             if (piece is KingPiece )
             {
+                
                 //TODO: will cause a stackoverflow if a king is checking since it references this. add a manual king check or something 
                 continue;
+            }
+
+            if (piece is PawnPiece)
+            {
+                
             }
             piece.RemoveSquaresThatAreThreats(squares);
         }

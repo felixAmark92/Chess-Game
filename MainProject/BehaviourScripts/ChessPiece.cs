@@ -100,7 +100,7 @@ public abstract class ChessPiece : Behaviour
         return movableSquares;
     }
 
-    public void RemoveSquaresThatAreThreats(List<Square> kingSquares)
+    public virtual void RemoveSquaresThatAreThreats(List<Square> kingSquares)
     {
         var thisSquares = GetMovableSquares(false);
 
