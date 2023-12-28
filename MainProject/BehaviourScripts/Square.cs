@@ -9,6 +9,8 @@ namespace MainProject.BehaviourScripts;
 
 public class Square : Behaviour
 {
+    public int X => ChessPosition.Position.X;
+    public int Y => ChessPosition.Position.Y;
     public ChessPosition ChessPosition  { get; }
     public ChessPiece OccupyingChessPiece { get; set; }
 

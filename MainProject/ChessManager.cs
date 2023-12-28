@@ -37,7 +37,6 @@ public static class ChessManager
             {
                 square.Entity.GetComponent<Renderer>().Color = Color.Green;
             }
-            
         }
     }
 
@@ -45,12 +44,13 @@ public static class ChessManager
     public static List<ChessPiece> BlackPieces { get; set; }
     public static List<ChessPiece> WhitePieces { get; set; }
 
+    public static GhostPawn WhiteGhostPawn { get; set; }
+    
+    public static GhostPawn BlackGhostPawn { get; set; }
+
     private static ChessColor _playerTurn = ChessColor.White;
     private static ChessPiece? _selectedPiece;
-
     public static IEnumerable<Square> SelectedPieceMovableSquares { get; private set; } = new List<Square>();
-    
-
 
     static ChessManager()
     {
@@ -131,12 +131,42 @@ public static class ChessManager
         switch (SelectedPiece)
         {
             case PawnPiece pawnPiece:
+                if (pawnPiece.ChessColor == ChessColor.Black && pawnPiece.CurrentSquare.Y == square.Y - 2)
+                {
+                    BlackGhostPawn = new GhostPawn(pawnPiece, ChessBoard.Squares[square.Y - 1, square.X]);
+                }
+                if (pawnPiece.ChessColor == ChessColor.White && pawnPiece.CurrentSquare.Y == square.Y + 2)
+                {
+                    WhiteGhostPawn = new GhostPawn(pawnPiece, ChessBoard.Squares[square.Y + 1, square.X]);
+                }
+
+                if (pawnPiece.CurrentSquare.X != square.X && square.SquareState == SquareState.NotOccupied)
+                {
+                    if (pawnPiece.ChessColor == ChessColor.Black)
+                    {
+                        WhiteGhostPawn.PawnPiece.CurrentSquare.OccupyingChessPiece = null;
+                        WhitePieces.Remove(WhiteGhostPawn.PawnPiece);
+                        WhiteGhostPawn.PawnPiece.Entity.Destroy();
+                        WhiteGhostPawn.Square.OccupyingChessPiece = null;
+                    }
+                    if (pawnPiece.ChessColor == ChessColor.White)
+                    {
+                        BlackGhostPawn.PawnPiece.CurrentSquare.OccupyingChessPiece = null;
+                        BlackPieces.Remove(BlackGhostPawn.PawnPiece);
+                        BlackGhostPawn.PawnPiece.Entity.Destroy();
+
+                    }
+                    
+                }
+                
                 pawnPiece.SetHasMoved();
                 break;
             case RookPiece rookPiece:
                 rookPiece.HasMoved = true;
                 break;
         }
+        
+        
 
         if (SelectedPiece is KingPiece kingPiece)
         {
@@ -175,6 +205,7 @@ public static class ChessManager
             SwitchActivePieces(BlackPieces, WhitePieces);
             CalculatePins(WhitePieces, BlackPieces);
             CheckMateCalculator.CalculateCheckMate(WhitePieces);
+            WhiteGhostPawn = null;
         }
         else
         {
@@ -182,6 +213,7 @@ public static class ChessManager
             SwitchActivePieces(WhitePieces, BlackPieces);
             CalculatePins(BlackPieces, WhitePieces);
             CheckMateCalculator.CalculateCheckMate(WhitePieces);
+            BlackGhostPawn = null;
         }
         _playerTurn = _playerTurn == ChessColor.Black ? ChessColor.White : ChessColor.Black;
 

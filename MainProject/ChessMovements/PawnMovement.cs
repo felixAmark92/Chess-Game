@@ -53,6 +53,24 @@ public class PawnMovement : IChessMovement
         var rightSide = Pos + direction + new Point(1, 0);
         if (_chessBoard.InsideChessBoard(rightSide))
         {
+            if (ChessManager.BlackGhostPawn is not null)
+            {
+                if (_pawnPiece.ChessColor == ChessColor.White &&
+                    ChessManager.BlackGhostPawn.Square == _chessBoard.Squares[rightSide.Y, rightSide.X])
+                {
+                    squares.Add(_chessBoard.Squares[rightSide.Y, rightSide.X]);   
+                }
+                
+            }
+            if (ChessManager.WhiteGhostPawn is not null)
+            {
+                if (_pawnPiece.ChessColor == ChessColor.Black &&
+                    ChessManager.WhiteGhostPawn.Square == _chessBoard.Squares[rightSide.Y, rightSide.X])
+                {
+                    squares.Add(_chessBoard.Squares[rightSide.Y, rightSide.X]);   
+                }
+                
+            }
             if (_chessBoard.Squares[rightSide.Y, rightSide.X].SquareState != CurrentSquare.SquareState && 
                 _chessBoard.Squares[rightSide.Y, rightSide.X].SquareState != SquareState.NotOccupied)
             {
@@ -74,11 +92,28 @@ public class PawnMovement : IChessMovement
         var leftSide = Pos + direction + new Point(-1, 0);
         if (_chessBoard.InsideChessBoard(leftSide))
         {
+            if (ChessManager.BlackGhostPawn is not null)
+            {
+                if (_pawnPiece.ChessColor == ChessColor.White &&
+                    ChessManager.BlackGhostPawn.Square == _chessBoard.Squares[leftSide.Y, leftSide.X])
+                {
+                    squares.Add(_chessBoard.Squares[leftSide.Y, leftSide.X]);   
+                }
+            }
+            if (ChessManager.WhiteGhostPawn is not null)
+            {
+                if (_pawnPiece.ChessColor == ChessColor.Black &&
+                    ChessManager.WhiteGhostPawn.Square == _chessBoard.Squares[leftSide.Y, leftSide.X])
+                {
+                    squares.Add(_chessBoard.Squares[leftSide.Y, leftSide.X]);   
+                }
+                
+            }
             if (_chessBoard.Squares[leftSide.Y, leftSide.X].SquareState != CurrentSquare.SquareState && 
                 _chessBoard.Squares[leftSide.Y, leftSide.X].SquareState != SquareState.NotOccupied)
             {
                 squares.Add(_chessBoard.Squares[leftSide.Y, leftSide.X]);
-                if (_chessBoard.Squares[rightSide.Y, rightSide.X].OccupyingChessPiece is KingPiece && checkInspect)
+                if (_chessBoard.Squares[leftSide.Y, leftSide.X].OccupyingChessPiece is KingPiece && checkInspect)
                 {
                     CheckMateCalculator.SetKingIsChecked(_chessBoard.Squares[rightSide.Y, rightSide.X].OccupyingChessPiece.ChessColor);
                     CheckMateCalculator.AttackerSquares.Add(CurrentSquare);

@@ -15,6 +15,7 @@ public abstract class ChessPiece : Behaviour
     protected readonly ChessBoard ChessBoard;
     private Square _currentSquare;
     
+    
 
     public Square CurrentSquare
     {
