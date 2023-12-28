@@ -81,7 +81,7 @@ public abstract class ChessPiece : Behaviour
             }
         }
 
-        if (CheckMateCalculator.KingIsChecked && this is not KingPiece)
+        if (CheckMateCalculator.KingIsChecked && this is not KingPiece && CheckMateCalculator.KingChessColor == ChessColor)
         {
             if (CheckMateCalculator.AttackerSquares.Count > 1)
             {

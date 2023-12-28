@@ -19,6 +19,11 @@ public static class CommonMovements
     {
         var squares = new List<Square>();
         var originalPos = pos;
+        if (chessBoard.Squares[pos.Y, pos.X].OccupyingChessPiece is QueenPiece)
+        {
+            Console.WriteLine("LETS START DEBUGGING");
+        }
+
 
         pos += incrementation;
         while (chessBoard.InsideChessBoard(pos))
@@ -39,7 +44,7 @@ public static class CommonMovements
                     if (checkInspect)
                     {
                         CheckMateCalculator.AttackerPaths.Add(new List<Square>(squares));
-                        CheckMateCalculator.KingIsChecked = true;
+                        CheckMateCalculator.SetKingIsChecked(chessBoard.Squares[pos.Y, pos.X].OccupyingChessPiece.ChessColor);
                         CheckMateCalculator.AttackerSquares.Add(chessBoard.Squares[originalPos.Y, originalPos.X]);
                     }
 
@@ -73,6 +78,7 @@ public static class CommonMovements
         pos += incrementation;
         while (chessBoard.InsideChessBoard(pos) && i < limit)
         {
+
             i++;
             if (chessBoard.Squares[pos.Y, pos.X].SquareState == SquareState.NotOccupied)
             {
@@ -89,7 +95,7 @@ public static class CommonMovements
                         if (checkInspect)
                         {
                             CheckMateCalculator.AttackerPaths.Add(new List<Square>(squares));
-                            CheckMateCalculator.KingIsChecked = true;
+                            CheckMateCalculator.SetKingIsChecked(chessBoard.Squares[pos.Y, pos.X].OccupyingChessPiece.ChessColor);
                             CheckMateCalculator.AttackerSquares.Add(chessBoard.Squares[originalPos.Y, originalPos.X]);
                         }
 

@@ -59,7 +59,7 @@ public class PawnMovement : IChessMovement
                 squares.Add(_chessBoard.Squares[rightSide.Y, rightSide.X]);
                 if (_chessBoard.Squares[rightSide.Y, rightSide.X].OccupyingChessPiece is KingPiece && checkInspect)
                 {
-                    CheckMateCalculator.KingIsChecked = true;
+                    CheckMateCalculator.SetKingIsChecked(_chessBoard.Squares[rightSide.Y, rightSide.X].OccupyingChessPiece.ChessColor);
                     CheckMateCalculator.AttackerSquares.Add(CurrentSquare);
                 }
                 
@@ -75,7 +75,7 @@ public class PawnMovement : IChessMovement
                 squares.Add(_chessBoard.Squares[leftSide.Y, leftSide.X]);
                 if (_chessBoard.Squares[rightSide.Y, rightSide.X].OccupyingChessPiece is KingPiece && checkInspect)
                 {
-                    CheckMateCalculator.KingIsChecked = true;
+                    CheckMateCalculator.SetKingIsChecked(_chessBoard.Squares[rightSide.Y, rightSide.X].OccupyingChessPiece.ChessColor);
                     CheckMateCalculator.AttackerSquares.Add(CurrentSquare);
                 }
             }
