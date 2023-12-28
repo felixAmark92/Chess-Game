@@ -101,7 +101,6 @@ public static class ChessManager
         {
             entity.GetComponent<Interactive>().SetInactive();
         }
-
         WhitePieces = whitePiecesEntities.Select(e => e.GetBehaviour<ChessPiece>()).ToList();
         BlackPieces = blackPiecesEntities.Select(e => e.GetBehaviour<ChessPiece>()).ToList();
     }
@@ -113,7 +112,6 @@ public static class ChessManager
         {
             movableSquare.Entity.GetComponent<Renderer>().Color = Color.White;
         }
-        
         if (square.SquareState != SquareState.NotOccupied)
         {
             if (square.SquareState == SquareState.OccupiedByBlack)
@@ -131,6 +129,9 @@ public static class ChessManager
         switch (SelectedPiece)
         {
             case PawnPiece pawnPiece:
+
+
+                
                 if (pawnPiece.ChessColor == ChessColor.Black && pawnPiece.CurrentSquare.Y == square.Y - 2)
                 {
                     BlackGhostPawn = new GhostPawn(pawnPiece, ChessBoard.Squares[square.Y - 1, square.X]);
@@ -139,7 +140,6 @@ public static class ChessManager
                 {
                     WhiteGhostPawn = new GhostPawn(pawnPiece, ChessBoard.Squares[square.Y + 1, square.X]);
                 }
-
                 if (pawnPiece.CurrentSquare.X != square.X && square.SquareState == SquareState.NotOccupied)
                 {
                     if (pawnPiece.ChessColor == ChessColor.Black)
@@ -147,7 +147,6 @@ public static class ChessManager
                         WhiteGhostPawn.PawnPiece.CurrentSquare.OccupyingChessPiece = null;
                         WhitePieces.Remove(WhiteGhostPawn.PawnPiece);
                         WhiteGhostPawn.PawnPiece.Entity.Destroy();
-                        WhiteGhostPawn.Square.OccupyingChessPiece = null;
                     }
                     if (pawnPiece.ChessColor == ChessColor.White)
                     {
@@ -156,7 +155,18 @@ public static class ChessManager
                         BlackGhostPawn.PawnPiece.Entity.Destroy();
 
                     }
+                }
+                
+                if (pawnPiece.ChessColor == ChessColor.Black &&
+                    square.Y == 7)
+                {
                     
+                    SelectedPiece = PromotePawn(pawnPiece, ChessType.Queen);
+                }
+                else if (pawnPiece.ChessColor == ChessColor.White &&
+                         square.Y == 0)
+                {
+                    SelectedPiece = PromotePawn(pawnPiece, ChessType.Queen);
                 }
                 
                 pawnPiece.SetHasMoved();
@@ -165,9 +175,6 @@ public static class ChessManager
                 rookPiece.HasMoved = true;
                 break;
         }
-        
-        
-
         if (SelectedPiece is KingPiece kingPiece)
         {
             if (square.ChessPosition.Position.X > kingPiece.Pos.X + 1 && kingPiece.HasMoved == false)
@@ -190,7 +197,6 @@ public static class ChessManager
             }
             kingPiece.HasMoved = true;
         }
-
         SelectedPiece.CurrentSquare = square;
         SelectedPiece = null;
 
@@ -212,13 +218,11 @@ public static class ChessManager
             CheckMateCalculator.CalculateChecks(WhitePieces);
             SwitchActivePieces(WhitePieces, BlackPieces);
             CalculatePins(BlackPieces, WhitePieces);
-            CheckMateCalculator.CalculateCheckMate(WhitePieces);
+            CheckMateCalculator.CalculateCheckMate(BlackPieces);
             BlackGhostPawn = null;
         }
         _playerTurn = _playerTurn == ChessColor.Black ? ChessColor.White : ChessColor.Black;
-
     }
-
     private static void SwitchActivePieces(List<ChessPiece> deactivate, List<ChessPiece> activate)
     {
         foreach (var chessPiece in deactivate)
@@ -236,10 +240,32 @@ public static class ChessManager
         {
             piece.IsPinned = false;
         }
-
         foreach (var piece in defender)
         {
             piece.CalculatePin();
         }
+    }
+
+    public static ChessPiece PromotePawn(PawnPiece pawnPiece, ChessType chessType)
+    {
+        var promotedPiece = ChessPieceFactory.CreateChessPiece(chessType, pawnPiece.ChessColor, pawnPiece.Pos);
+
+        if (pawnPiece.ChessColor == ChessColor.Black)
+        {
+            BlackPieces.Remove(pawnPiece);
+            pawnPiece.Entity.Destroy();
+            
+            BlackPieces.Add(promotedPiece.GetBehaviour<ChessPiece>());
+        }
+        else
+        {
+            WhitePieces.Remove(pawnPiece);
+            pawnPiece.Entity.Destroy();
+            
+            WhitePieces.Add(promotedPiece.GetBehaviour<ChessPiece>());
+        }
+
+        return promotedPiece.GetBehaviour<ChessPiece>();
+
     }
 }

@@ -17,7 +17,7 @@ public abstract class ChessPiece : Behaviour
     
     
 
-    public Square CurrentSquare
+    public virtual Square CurrentSquare
     {
         get => _currentSquare;
         set
@@ -89,14 +89,14 @@ public abstract class ChessPiece : Behaviour
 
         if (CheckMateCalculator.KingIsChecked && this is not KingPiece && CheckMateCalculator.KingChessColor == ChessColor)
         {
-            if (CheckMateCalculator.AttackerSquares.Count > 1)
+            if (CheckMateCalculator.AttackingPieceSquare.Count > 1)
             {
                 return new List<Square>();
             }
 
             foreach (var square in copy)
             {
-                if (!CheckMateCalculator.AttackerPaths[0].Contains(square) && CheckMateCalculator.AttackerSquares[0] != square)
+                if (!CheckMateCalculator.AttackerPaths[0].Contains(square) && CheckMateCalculator.AttackingPieceSquare[0] != square)
                 {
                     movableSquares.Remove(square);
                 }

@@ -3,18 +3,15 @@ using System.Linq;
 using MainProject.ChessMovements;
 using MainProject.Enums;
 using Microsoft.Xna.Framework;
-
 namespace MainProject.BehaviourScripts.ChessPieces;
-
 public class PawnPiece : ChessPiece
 {
     private bool _hasMoved;
-
+    
     public bool IsMoved()
     {
         return _hasMoved;
     }
-
     public void SetHasMoved()
     {
         _hasMoved = true;
@@ -23,7 +20,6 @@ public class PawnPiece : ChessPiece
     {
         ChessMovement = new PawnMovement(chessBoard, this);
     }
-
     public override void RemoveSquaresThatAreAttacked(KingPiece kingPiece, List<Square> kingSquares)
     {
         Point direction = ChessColor == ChessColor.Black 
@@ -39,14 +35,12 @@ public class PawnPiece : ChessPiece
                 thisSquares.Add(ChessManager.ChessBoard.Squares[rightSide.Y, rightSide.X]);
             }
         }
-        
         var leftSide = Pos + direction + new Point(-1, 0);
         if (ChessManager.ChessBoard.InsideChessBoard(leftSide))
         {
             if (ChessManager.ChessBoard.Squares[leftSide.Y, leftSide.X].SquareState == SquareState.NotOccupied)
             {
                 thisSquares.Add(ChessManager.ChessBoard.Squares[leftSide.Y, leftSide.X]);
-
             }
         }
         var squares = kingSquares.Where(s => thisSquares.Contains(s)).ToList();
@@ -57,9 +51,7 @@ public class PawnPiece : ChessPiece
             {
                 kingSquares.Remove(ChessBoard.Squares[kingPiece.Pos.Y, kingPiece.Pos.X + 2]);
             }
-
             kingSquares.Remove(square);
         }
-        
     }
 }

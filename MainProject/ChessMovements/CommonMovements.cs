@@ -41,7 +41,7 @@ public static class CommonMovements
                     {
                         CheckMateCalculator.AttackerPaths.Add(new List<Square>(squares));
                         CheckMateCalculator.SetKingIsChecked(chessBoard.Squares[pos.Y, pos.X].OccupyingChessPiece.ChessColor);
-                        CheckMateCalculator.AttackerSquares.Add(chessBoard.Squares[originalPos.Y, originalPos.X]);
+                        CheckMateCalculator.AttackingPieceSquare.Add(chessBoard.Squares[originalPos.Y, originalPos.X]);
                     }
 
                     pos += incrementation;
@@ -89,7 +89,7 @@ public static class CommonMovements
                     {
                         CheckMateCalculator.AttackerPaths.Add(new List<Square>(squares));
                         CheckMateCalculator.SetKingIsChecked(chessBoard.Squares[pos.Y, pos.X].OccupyingChessPiece.ChessColor);
-                        CheckMateCalculator.AttackerSquares.Add(chessBoard.Squares[originalPos.Y, originalPos.X]);
+                        CheckMateCalculator.AttackingPieceSquare.Add(chessBoard.Squares[originalPos.Y, originalPos.X]);
                     }
 
                     pos += incrementation;

@@ -11,7 +11,7 @@ public static class CheckMateCalculator
     public static bool KingIsChecked { get; private set; }
     public static ChessColor KingChessColor { get; private set; }
 
-    public static List<Square> AttackerSquares;
+    public static List<Square> AttackingPieceSquare;
 
     public static List<List<Square>> AttackerPaths;
 
@@ -26,7 +26,7 @@ public static class CheckMateCalculator
     public static void CalculateChecks(List<ChessPiece> pieces)
     {
         KingIsChecked = false;
-        AttackerSquares = new List<Square>();
+        AttackingPieceSquare = new List<Square>();
         AttackerPaths = new List<List<Square>>();
         
         foreach (var piece in pieces)
