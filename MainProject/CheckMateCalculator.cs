@@ -41,8 +41,6 @@ public static class CheckMateCalculator
         var pieces = 
             kingPiece.ChessColor == ChessColor.Black ? ChessManager.WhitePieces : ChessManager.BlackPieces;
         
-        var threats = new List<Square>();
-        
         foreach (var piece in pieces)
         {
             piece.IsGuarded = false;
@@ -50,7 +48,7 @@ public static class CheckMateCalculator
         foreach (var piece in pieces)
         {
             
-            piece.RemoveSquaresThatAreAttacked(squares);
+            piece.RemoveSquaresThatAreAttacked(kingPiece, squares);
         }
     }
 

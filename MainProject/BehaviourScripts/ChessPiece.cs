@@ -12,7 +12,7 @@ namespace MainProject.BehaviourScripts;
 
 public abstract class ChessPiece : Behaviour
 {
-    private readonly ChessBoard _chessBoard;
+    protected readonly ChessBoard ChessBoard;
     private Square _currentSquare;
     
 
@@ -33,8 +33,8 @@ public abstract class ChessPiece : Behaviour
             _currentSquare = value;
             _currentSquare.OccupyingChessPiece = this;
             Entity.GetComponent<Transform>().Position = new Vector2(
-                Pos.X * _chessBoard.SquaresSize,
-                Pos.Y * _chessBoard.SquaresSize);
+                Pos.X * ChessBoard.SquaresSize,
+                Pos.Y * ChessBoard.SquaresSize);
         }
     }
 
@@ -51,14 +51,14 @@ public abstract class ChessPiece : Behaviour
     {
         ChessColor = chessColor;
         CurrentSquare = chessBoard.Squares[pos.Y, pos.X];
-        _chessBoard = chessBoard;
+        ChessBoard = chessBoard;
     }
 
     public override void ComponentsInit()
     {
         Entity.GetComponent<Transform>().Position =
-            new Vector2(_currentSquare.ChessPosition.Position.X * _chessBoard.SquaresSize,
-                _currentSquare.ChessPosition.Position.Y * _chessBoard.SquaresSize);
+            new Vector2(_currentSquare.ChessPosition.Position.X * ChessBoard.SquaresSize,
+                _currentSquare.ChessPosition.Position.Y * ChessBoard.SquaresSize);
 
         Entity.GetComponent<Renderer>().LayerDepth = 1f;
 
@@ -105,7 +105,7 @@ public abstract class ChessPiece : Behaviour
         return movableSquares;
     }
 
-    public virtual void RemoveSquaresThatAreAttacked(List<Square> kingSquares)
+    public virtual void RemoveSquaresThatAreAttacked(KingPiece kingPiece, List<Square> kingSquares)
     {
         var thisSquares = 
             this is KingPiece ? ChessMovement.GetDefaultSquares(false) : GetMovableSquares(false);
@@ -114,6 +114,10 @@ public abstract class ChessPiece : Behaviour
 
         foreach (var square in squares)
         {
+            if (kingPiece.HasMoved == false && square == ChessBoard.Squares[kingPiece.Pos.Y, kingPiece.Pos.X + 1] )
+            {
+                kingSquares.Remove(ChessBoard.Squares[kingPiece.Pos.Y, kingPiece.Pos.X + 2]);
+            }
             kingSquares.Remove(square);
         }
     }

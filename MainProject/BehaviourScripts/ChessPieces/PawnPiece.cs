@@ -24,7 +24,7 @@ public class PawnPiece : ChessPiece
         ChessMovement = new PawnMovement(chessBoard, this);
     }
 
-    public override void RemoveSquaresThatAreAttacked(List<Square> kingSquares)
+    public override void RemoveSquaresThatAreAttacked(KingPiece kingPiece, List<Square> kingSquares)
     {
         Point direction = ChessColor == ChessColor.Black 
             ? new Point(0, 1) : new Point(0, -1);
@@ -53,6 +53,11 @@ public class PawnPiece : ChessPiece
 
         foreach (var square in squares)
         {
+            if (kingPiece.HasMoved == false && square == ChessBoard.Squares[kingPiece.Pos.Y, kingPiece.Pos.X + 1] )
+            {
+                kingSquares.Remove(ChessBoard.Squares[kingPiece.Pos.Y, kingPiece.Pos.X + 2]);
+            }
+
             kingSquares.Remove(square);
         }
         
