@@ -7,11 +7,11 @@ namespace MainProject.BehaviourScripts.ChessPieces;
 
 public class RookPiece : ChessPiece
 {
+    public bool HasMoved { get; set; }
     public RookPiece(ChessColor color, ChessBoard chessBoard, Point pos) 
         : base(color, chessBoard, pos)
     {
         ChessMovement = new RookMovement(chessBoard, this);
-        _pinCalculator = new RookPinCalculator(chessBoard, this);
+        PinCalculator = new RookPinCalculator(chessBoard, this);
     }
-    
 }

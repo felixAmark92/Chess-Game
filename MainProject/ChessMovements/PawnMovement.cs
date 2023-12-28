@@ -64,6 +64,11 @@ public class PawnMovement : IChessMovement
                 }
                 
             }
+
+            if (_chessBoard.Squares[rightSide.Y, rightSide.X].SquareState == CurrentSquare.SquareState)
+            {
+                _chessBoard.Squares[rightSide.Y, rightSide.X].OccupyingChessPiece.IsGuarded = true;
+            }
         }
         
         var leftSide = Pos + direction + new Point(-1, 0);
@@ -78,6 +83,10 @@ public class PawnMovement : IChessMovement
                     CheckMateCalculator.SetKingIsChecked(_chessBoard.Squares[rightSide.Y, rightSide.X].OccupyingChessPiece.ChessColor);
                     CheckMateCalculator.AttackerSquares.Add(CurrentSquare);
                 }
+            }
+            if (_chessBoard.Squares[leftSide.Y, leftSide.X].SquareState == CurrentSquare.SquareState)
+            {
+                _chessBoard.Squares[leftSide.Y, leftSide.X].OccupyingChessPiece.IsGuarded = true;
             }
         }
 

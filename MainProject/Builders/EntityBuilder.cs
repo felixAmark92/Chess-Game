@@ -8,7 +8,7 @@ namespace MainProject.Builders;
 
 public class EntityBuilder
 {
-    private EntityLogic.Entity _entity;
+    private readonly Entity _entity;
 
 
     private EntityBuilder()
@@ -45,10 +45,8 @@ public class EntityBuilder
         return this;
     }
 
-    public EntityLogic.Entity Build()
+    public Entity Build()
     {
         return _entity;
     }
-    
-
 }

@@ -10,6 +10,6 @@ public class QueenPiece : ChessPiece
     public QueenPiece(ChessColor chessColor, ChessBoard chessBoard, Point pos) : base(chessColor, chessBoard, pos)
     {
         ChessMovement = new QueenMovement(chessBoard, this);
-        _pinCalculator = new QueenPinCalculator(chessBoard, this);
+        PinCalculator = new QueenPinCalculator(chessBoard, this);
     }
 }

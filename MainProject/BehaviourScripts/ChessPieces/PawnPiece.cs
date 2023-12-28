@@ -24,7 +24,7 @@ public class PawnPiece : ChessPiece
         ChessMovement = new PawnMovement(chessBoard, this);
     }
 
-    public override void RemoveSquaresThatAreThreats(List<Square> kingSquares)
+    public override void RemoveSquaresThatAreAttacked(List<Square> kingSquares)
     {
         Point direction = ChessColor == ChessColor.Black 
             ? new Point(0, 1) : new Point(0, -1);

@@ -14,12 +14,14 @@ public abstract class ChessPiece : Behaviour
 {
     private readonly ChessBoard _chessBoard;
     private Square _currentSquare;
+    
 
     public Square CurrentSquare
     {
         get => _currentSquare;
         set
         {
+            
             if (_currentSquare is null)
             {
                 _currentSquare = value;
@@ -30,15 +32,18 @@ public abstract class ChessPiece : Behaviour
             _currentSquare.OccupyingChessPiece = null;
             _currentSquare = value;
             _currentSquare.OccupyingChessPiece = this;
+            Entity.GetComponent<Transform>().Position = new Vector2(
+                Pos.X * _chessBoard.SquaresSize,
+                Pos.Y * _chessBoard.SquaresSize);
         }
     }
 
+    public bool IsGuarded { get; set; }
     protected IChessMovement ChessMovement { get; set; }
-    protected IPinCalculator _pinCalculator { get; set; } = new NoPinPieceCalculator();
+    protected IPinCalculator PinCalculator { get; set; } = new NoPinPieceCalculator();
     public ChessColor ChessColor { get; }
-
-    public bool IsPinned;
-    public List<Square> ValidPinSquares;
+    public bool IsPinned { get; set; }
+    public List<Square> ValidPinSquares { get; set; }
 
     public Point Pos => CurrentSquare.ChessPosition.Position;
 
@@ -100,7 +105,7 @@ public abstract class ChessPiece : Behaviour
         return movableSquares;
     }
 
-    public virtual void RemoveSquaresThatAreThreats(List<Square> kingSquares)
+    public virtual void RemoveSquaresThatAreAttacked(List<Square> kingSquares)
     {
         var thisSquares = 
             this is KingPiece ? ChessMovement.GetDefaultSquares(false) : GetMovableSquares(false);
@@ -115,6 +120,6 @@ public abstract class ChessPiece : Behaviour
 
     public void CalculatePin()
     {
-        _pinCalculator.CalculatePin();
+        PinCalculator.CalculatePin();
     }
 }

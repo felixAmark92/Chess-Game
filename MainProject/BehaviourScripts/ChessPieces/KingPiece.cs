@@ -8,10 +8,11 @@ namespace MainProject.BehaviourScripts.ChessPieces;
 
 public class KingPiece : ChessPiece
 {
+    public bool HasMoved { get; set; }
     public KingPiece(ChessColor chessColor, ChessBoard chessBoard, Point pos) : base(chessColor, chessBoard, pos)
     {
         ChessMovement = new KingMovement(chessBoard, this);
-        _pinCalculator = new NoPinPieceCalculator();
+        PinCalculator = new NoPinPieceCalculator();
     }
 
     public override List<Square> GetMovableSquares(bool checkInspect)
@@ -19,12 +20,22 @@ public class KingPiece : ChessPiece
         var baseList = base.GetMovableSquares(checkInspect);
 
         CheckMateCalculator.CalculateThreats(this, baseList);
-        return baseList;
-    }
 
-    public List<Square> GetDefaultMovableSquares(bool checkInspect)
-    {
-        return ChessMovement.GetDefaultSquares(checkInspect);
+        var copy = new List<Square>(baseList);
+
+        foreach (var square in copy)
+        {
+            if (square.OccupyingChessPiece is null)
+            {
+                continue;
+            }
+            if (square.OccupyingChessPiece.IsGuarded)
+            {
+                baseList.Remove(square);
+            }
+        }
+        
+        return baseList;
     }
 
 }

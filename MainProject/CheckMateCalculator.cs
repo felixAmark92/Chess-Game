@@ -42,9 +42,34 @@ public static class CheckMateCalculator
             kingPiece.ChessColor == ChessColor.Black ? ChessManager.WhitePieces : ChessManager.BlackPieces;
         
         var threats = new List<Square>();
+        
         foreach (var piece in pieces)
         {
-            piece.RemoveSquaresThatAreThreats(squares);
+            piece.IsGuarded = false;
         }
+        foreach (var piece in pieces)
+        {
+            
+            piece.RemoveSquaresThatAreAttacked(squares);
+        }
+    }
+
+    public static void CalculateCheckMate(List<ChessPiece> pieces)
+    {
+        var availableMoves = new List<Square>();
+
+        foreach (var piece in pieces)
+        {
+            availableMoves.AddRange(piece.GetMovableSquares(false));
+        }
+
+        if (availableMoves.Count < 1)
+        {
+            for (int i = 0; i < 100; i++)
+            {
+                Console.WriteLine("CHECKMATE CHECKMATE CHECKMATE CHECKMATE CHECKMATE CHECKMATE CHECKMATE CHECKMATE CHECKMATE CHECKMATE CHECKMATE ");
+            }
+        }
+        
     }
 }

@@ -128,14 +128,31 @@ public static class ChessManager
             }
         }
 
-        if (SelectedPiece is PawnPiece pawnPiece)
+        switch (SelectedPiece)
         {
-            pawnPiece.SetHasMoved();
+            case PawnPiece pawnPiece:
+                pawnPiece.SetHasMoved();
+                break;
+            case RookPiece rookPiece:
+                rookPiece.HasMoved = true;
+                break;
         }
+
+        if (SelectedPiece is KingPiece kingPiece)
+        {
+            if (square.ChessPosition.Position.X > kingPiece.Pos.X + 1 && kingPiece.HasMoved == false)
+            {
+                var rookPiece = ChessBoard.Squares[kingPiece.Pos.Y, kingPiece.Pos.X + 3].OccupyingChessPiece;
+
+                if (rookPiece is RookPiece {HasMoved: false } castleRookPiece )
+                {
+                    castleRookPiece.CurrentSquare = ChessBoard.Squares[kingPiece.Pos.Y, kingPiece.Pos.X + 1];
+                }
+            }
+            kingPiece.HasMoved = true;
+        }
+
         SelectedPiece.CurrentSquare = square;
-        SelectedPiece.Entity.GetComponent<Transform>().Position = new Vector2(
-            square.ChessPosition.Position.X * ChessBoard.SquaresSize,
-            square.ChessPosition.Position.Y * ChessBoard.SquaresSize);
         SelectedPiece = null;
 
         EndTurn();
@@ -148,12 +165,14 @@ public static class ChessManager
             CheckMateCalculator.CalculateChecks(BlackPieces);
             SwitchActivePieces(BlackPieces, WhitePieces);
             CalculatePins(WhitePieces, BlackPieces);
+            CheckMateCalculator.CalculateCheckMate(WhitePieces);
         }
         else
         {
             CheckMateCalculator.CalculateChecks(WhitePieces);
             SwitchActivePieces(WhitePieces, BlackPieces);
             CalculatePins(BlackPieces, WhitePieces);
+            CheckMateCalculator.CalculateCheckMate(WhitePieces);
         }
         _playerTurn = _playerTurn == ChessColor.Black ? ChessColor.White : ChessColor.Black;
 

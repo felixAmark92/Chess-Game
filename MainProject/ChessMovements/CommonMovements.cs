@@ -19,11 +19,6 @@ public static class CommonMovements
     {
         var squares = new List<Square>();
         var originalPos = pos;
-        if (chessBoard.Squares[pos.Y, pos.X].OccupyingChessPiece is QueenPiece)
-        {
-            Console.WriteLine("LETS START DEBUGGING");
-        }
-
 
         pos += incrementation;
         while (chessBoard.InsideChessBoard(pos))
@@ -34,6 +29,7 @@ public static class CommonMovements
             }
             else if (chessBoard.Squares[pos.Y, pos.X].SquareState == squareState)
             {
+                chessBoard.Squares[pos.Y, pos.X].OccupyingChessPiece.IsGuarded = true;
                 break;
             }
             else 
@@ -84,29 +80,29 @@ public static class CommonMovements
             {
                 squares.Add(chessBoard.Squares[pos.Y, pos.X]);
             }
-            else
+            else if (aggressive && chessBoard.Squares[pos.Y, pos.X].SquareState != squareState)
             {
-                if (aggressive && chessBoard.Squares[pos.Y, pos.X].SquareState != squareState)
+                squares.Add(chessBoard.Squares[pos.Y, pos.X]);
+                if (chessBoard.Squares[pos.Y, pos.X].OccupyingChessPiece is KingPiece)
                 {
-                    squares.Add(chessBoard.Squares[pos.Y, pos.X]);
-
-                    if (chessBoard.Squares[pos.Y, pos.X].OccupyingChessPiece is KingPiece)
+                    if (checkInspect)
                     {
-                        if (checkInspect)
-                        {
-                            CheckMateCalculator.AttackerPaths.Add(new List<Square>(squares));
-                            CheckMateCalculator.SetKingIsChecked(chessBoard.Squares[pos.Y, pos.X].OccupyingChessPiece.ChessColor);
-                            CheckMateCalculator.AttackerSquares.Add(chessBoard.Squares[originalPos.Y, originalPos.X]);
-                        }
+                        CheckMateCalculator.AttackerPaths.Add(new List<Square>(squares));
+                        CheckMateCalculator.SetKingIsChecked(chessBoard.Squares[pos.Y, pos.X].OccupyingChessPiece.ChessColor);
+                        CheckMateCalculator.AttackerSquares.Add(chessBoard.Squares[originalPos.Y, originalPos.X]);
+                    }
 
-                        pos += incrementation;
-                        if (chessBoard.InsideChessBoard(pos))
-                        {
-                            squares.Add(chessBoard.Squares[pos.Y, pos.X]);
-                        }
+                    pos += incrementation;
+                    if (chessBoard.InsideChessBoard(pos))
+                    {
+                        squares.Add(chessBoard.Squares[pos.Y, pos.X]);
                     }
                 }
                 break;
+            }
+            else
+            {
+                chessBoard.Squares[pos.Y, pos.X].OccupyingChessPiece.IsGuarded = true;
             }
             pos += incrementation;
         }
