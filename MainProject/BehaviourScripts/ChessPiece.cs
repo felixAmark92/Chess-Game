@@ -118,6 +118,10 @@ public abstract class ChessPiece : Behaviour
             {
                 kingSquares.Remove(ChessBoard.Squares[kingPiece.Pos.Y, kingPiece.Pos.X + 2]);
             }
+            if (kingPiece.HasMoved == false && square == ChessBoard.Squares[kingPiece.Pos.Y, kingPiece.Pos.X - 1] )
+            {
+                kingSquares.Remove(ChessBoard.Squares[kingPiece.Pos.Y, kingPiece.Pos.X - 2]);
+            }
             kingSquares.Remove(square);
         }
     }

@@ -149,6 +149,15 @@ public static class ChessManager
                     castleRookPiece.CurrentSquare = ChessBoard.Squares[kingPiece.Pos.Y, kingPiece.Pos.X + 1];
                 }
             }
+            if (square.ChessPosition.Position.X < kingPiece.Pos.X - 1 && kingPiece.HasMoved == false)
+            {
+                var rookPiece = ChessBoard.Squares[kingPiece.Pos.Y, kingPiece.Pos.X - 4].OccupyingChessPiece;
+
+                if (rookPiece is RookPiece {HasMoved: false } castleRookPiece )
+                {
+                    castleRookPiece.CurrentSquare = ChessBoard.Squares[kingPiece.Pos.Y, kingPiece.Pos.X - 1];
+                }
+            }
             kingPiece.HasMoved = true;
         }
 

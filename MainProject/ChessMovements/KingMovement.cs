@@ -22,7 +22,7 @@ public class KingMovement : IChessMovement
     public List<Square> GetDefaultSquares(bool checkInspect)
     {
         var movableSquares = new List<Square>();
-        if (_kingPiece.HasMoved == false)
+        if (_kingPiece.HasMoved == false && !CheckMateCalculator.KingIsChecked)
         {
             if ( _chessBoard.Squares[Pos.Y, Pos.X + 1].SquareState == SquareState.NotOccupied && 
                  _chessBoard.Squares[Pos.Y, Pos.X + 2].SquareState == SquareState.NotOccupied)
@@ -30,6 +30,18 @@ public class KingMovement : IChessMovement
                 if (_chessBoard.Squares[Pos.Y, Pos.X + 3].OccupyingChessPiece is RookPiece { HasMoved: false })
                 {
                     movableSquares.Add(_chessBoard.Squares[Pos.Y, Pos.X + 2]);
+                }
+            }
+        }
+        if (_kingPiece.HasMoved == false && !CheckMateCalculator.KingIsChecked)
+        {
+            if ( _chessBoard.Squares[Pos.Y, Pos.X - 1].SquareState == SquareState.NotOccupied && 
+                 _chessBoard.Squares[Pos.Y, Pos.X - 2].SquareState == SquareState.NotOccupied &&
+                 _chessBoard.Squares[Pos.Y, Pos.X - 3].SquareState == SquareState.NotOccupied )
+            {
+                if (_chessBoard.Squares[Pos.Y, Pos.X - 4].OccupyingChessPiece is RookPiece { HasMoved: false })
+                {
+                    movableSquares.Add(_chessBoard.Squares[Pos.Y, Pos.X - 2]);
                 }
             }
         }
