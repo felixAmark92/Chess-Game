@@ -102,7 +102,8 @@ public abstract class ChessPiece : Behaviour
 
     public virtual void RemoveSquaresThatAreThreats(List<Square> kingSquares)
     {
-        var thisSquares = GetMovableSquares(false);
+        var thisSquares = 
+            this is KingPiece ? ChessMovement.GetDefaultSquares(false) : GetMovableSquares(false);
 
         var squares = kingSquares.Where(s => thisSquares.Contains(s)).ToList();
 

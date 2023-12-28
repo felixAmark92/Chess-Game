@@ -44,17 +44,6 @@ public static class CheckMateCalculator
         var threats = new List<Square>();
         foreach (var piece in pieces)
         {
-            if (piece is KingPiece )
-            {
-                
-                //TODO: will cause a stackoverflow if a king is checking since it references this. add a manual king check or something 
-                continue;
-            }
-
-            if (piece is PawnPiece)
-            {
-                
-            }
             piece.RemoveSquaresThatAreThreats(squares);
         }
     }

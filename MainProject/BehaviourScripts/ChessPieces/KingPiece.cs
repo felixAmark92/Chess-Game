@@ -22,4 +22,9 @@ public class KingPiece : ChessPiece
         return baseList;
     }
 
+    public List<Square> GetDefaultMovableSquares(bool checkInspect)
+    {
+        return ChessMovement.GetDefaultSquares(checkInspect);
+    }
+
 }
