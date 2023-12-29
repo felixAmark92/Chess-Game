@@ -108,6 +108,7 @@ public abstract class ChessPiece : Behaviour
 
     public virtual void RemoveSquaresThatAreAttacked(KingPiece kingPiece, List<Square> kingSquares)
     {
+        Console.WriteLine(CurrentSquare.ChessPosition.Board);
         
         var thisSquares = 
             this is KingPiece ? ChessMovement.GetDefaultSquares(false) : GetMovableSquares(false);

@@ -34,6 +34,11 @@ public class PawnPiece : ChessPiece
             {
                 thisSquares.Add(ChessManager.ChessBoard.Squares[rightSide.Y, rightSide.X]);
             }
+
+            if (ChessManager.ChessBoard.Squares[rightSide.Y, rightSide.X].SquareState == CurrentSquare.SquareState)
+            {
+                ChessManager.ChessBoard.Squares[rightSide.Y, rightSide.X].OccupyingChessPiece.IsGuarded = true;
+            }
         }
         var leftSide = Pos + direction + new Point(-1, 0);
         if (ChessManager.ChessBoard.InsideChessBoard(leftSide))
@@ -41,6 +46,10 @@ public class PawnPiece : ChessPiece
             if (ChessManager.ChessBoard.Squares[leftSide.Y, leftSide.X].SquareState == SquareState.NotOccupied)
             {
                 thisSquares.Add(ChessManager.ChessBoard.Squares[leftSide.Y, leftSide.X]);
+            }
+            if (ChessManager.ChessBoard.Squares[leftSide.Y, leftSide.X].SquareState == CurrentSquare.SquareState)
+            {
+                ChessManager.ChessBoard.Squares[leftSide.Y, leftSide.X].OccupyingChessPiece.IsGuarded = true;
             }
         }
         var squares = kingSquares.Where(s => thisSquares.Contains(s)).ToList();

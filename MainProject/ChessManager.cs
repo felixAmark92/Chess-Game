@@ -24,6 +24,7 @@ public static class ChessManager
 
             foreach (var square in SelectedPieceMovableSquares)
             {
+                
                 square.Entity.GetComponent<Renderer>().Color = Color.White;
             }
 

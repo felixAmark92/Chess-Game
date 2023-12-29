@@ -29,15 +29,7 @@ public static class CheckMateCalculator
         AttackingPieceSquare = new List<Square>();
         AttackerPaths = new List<List<Square>>();
         
-        foreach (var piece in pieces)
-        {
-            piece.IsGuarded = false;
 
-            if (piece is QueenPiece)
-            {
-                Console.WriteLine("queen peice got unguarded");
-            }
-        }
         
         foreach (var piece in pieces)
         {
@@ -51,7 +43,11 @@ public static class CheckMateCalculator
         var pieces = 
             kingPiece.ChessColor == ChessColor.Black ? ChessManager.WhitePieces : ChessManager.BlackPieces;
         
+        foreach (var piece in pieces)
+        {
+            piece.IsGuarded = false;
 
+        }
         foreach (var piece in pieces)
         {
             
