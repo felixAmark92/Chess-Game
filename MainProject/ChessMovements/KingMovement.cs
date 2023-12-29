@@ -18,7 +18,6 @@ public class KingMovement : IChessMovement
         _kingPiece = kingPiece;
         _chessBoard = chessBoard;
     }
-
     public List<Square> GetDefaultSquares(bool checkInspect)
     {
         var movableSquares = new List<Square>();
@@ -57,14 +56,13 @@ public class KingMovement : IChessMovement
 
                 if (_chessBoard.Squares[y, x].SquareState == CurrentSquare.SquareState)
                 {
+                    _chessBoard.Squares[y, x].OccupyingChessPiece.IsGuarded = true;
                     continue;
                 }
 
                 movableSquares.Add(_chessBoard.Squares[y, x]);
             }
         }
-
         return movableSquares;
     }
-
 }

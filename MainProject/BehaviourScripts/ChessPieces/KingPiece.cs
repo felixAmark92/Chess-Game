@@ -38,4 +38,8 @@ public class KingPiece : ChessPiece
         return baseList;
     }
 
+    public override char Get_FEN_Notation()
+    {
+        return ChessColor == ChessColor.Black ? 'k' : 'K';
+    }
 }

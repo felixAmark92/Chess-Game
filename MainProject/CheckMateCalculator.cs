@@ -31,6 +31,16 @@ public static class CheckMateCalculator
         
         foreach (var piece in pieces)
         {
+            piece.IsGuarded = false;
+
+            if (piece is QueenPiece)
+            {
+                Console.WriteLine("queen peice got unguarded");
+            }
+        }
+        
+        foreach (var piece in pieces)
+        {
             Console.WriteLine(piece.GetType());
             piece.GetMovableSquares(true);
         }
@@ -41,10 +51,7 @@ public static class CheckMateCalculator
         var pieces = 
             kingPiece.ChessColor == ChessColor.Black ? ChessManager.WhitePieces : ChessManager.BlackPieces;
         
-        foreach (var piece in pieces)
-        {
-            piece.IsGuarded = false;
-        }
+
         foreach (var piece in pieces)
         {
             
@@ -69,5 +76,17 @@ public static class CheckMateCalculator
             }
         }
         
+    }
+    
+    public static void CalculatePins(List<ChessPiece> attacker, List<ChessPiece> defender)
+    {
+        foreach (var piece in attacker)
+        {
+            piece.IsPinned = false;
+        }
+        foreach (var piece in defender)
+        {
+            piece.CalculatePin();
+        }
     }
 }

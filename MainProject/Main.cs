@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using MainProject.Components;
 using MainProject.Enums;
 using MainProject.Factories;
@@ -50,6 +51,28 @@ public class Main : Game
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
             Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
+
+        if (Keyboard.GetState().IsKeyDown(Keys.F))
+        {
+            Console.WriteLine(ChessManager.ChessBoard.Get_FEN_String());
+        }
+
+        if (ChessManager.PlayerTurn == ChessColor.Black)
+        {
+            var computerMove = StockFish.GetCommand(ChessManager.ChessBoard.Get_FEN_String());
+        
+            char[] startingSquareString = { computerMove[0], computerMove[1] }; 
+            char[] targetSquareString = { computerMove[2], computerMove[3] };
+        
+            var piece = ChessManager.ChessBoard.NotationToSquare(new string(startingSquareString)).OccupyingChessPiece;
+            var target = ChessManager.ChessBoard.NotationToSquare(new string(targetSquareString));
+        
+            ChessManager.SelectedPiece = piece;
+            ChessManager.MoveSelectedPiece(target);
+        
+        }
+        
+
 
         // TODO: Add your update logic here
         InteractiveSystem.Update();

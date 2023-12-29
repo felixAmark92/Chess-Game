@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using MainProject.BehaviourScripts.ChessPieces;
 using MainProject.Enums;
 using MainProject.Factories;
@@ -40,88 +42,97 @@ public class ChessBoard
     private ChessColor ColorSwap(ChessColor chessColor)
     {
         return chessColor == ChessColor.Black ? ChessColor.White : ChessColor.Black;
+    }
+    public string Get_FEN_String()
+    {
+        var stringBuilder = new StringBuilder();
 
+        for (int i = 0; i < Squares.GetLength(0); i++)
+        {
+            int j = 0;
+            for (int k = 0; k < Squares.GetLength(1); k++)
+            {
+                if (Squares[i,k].SquareState != SquareState.NotOccupied)
+                {
+                    if (j != 0)
+                    {
+                        stringBuilder.Append(j);
+                    }
+                    j = 0;
+                    stringBuilder.Append(Squares[i, k].OccupyingChessPiece.Get_FEN_Notation());
+                }
+                else
+                {
+                    j++;
+                }
+            }
+            if (j != 0)
+            {
+                stringBuilder.Append(j);
+            }
+            if (i != Squares.GetLength(0) - 1)
+            {
+                stringBuilder.Append('/');
+            }
+        }
+        stringBuilder.Append(ChessManager.PlayerTurn == ChessColor.Black ? " b " : " w ");
+
+        if (Squares[7, 4].SquareState == SquareState.OccupiedByWhite &&
+            Squares[7, 7].SquareState == SquareState.OccupiedByWhite)
+        {
+            if (Squares[7, 4].OccupyingChessPiece is KingPiece {HasMoved: false} &&
+                Squares[7, 7].OccupyingChessPiece is RookPiece {HasMoved: false})
+            {
+                stringBuilder.Append('K');
+            }
+
+            
+        }
+        if (Squares[7, 4].SquareState == SquareState.OccupiedByWhite &&
+            Squares[7, 0].SquareState == SquareState.OccupiedByWhite)
+        {
+            if (Squares[7, 4].OccupyingChessPiece is KingPiece {HasMoved: false} &&
+                Squares[7, 0].OccupyingChessPiece is RookPiece {HasMoved: false})
+            {
+                stringBuilder.Append('Q');
+            }
+        }
+        
+        if (Squares[0, 4].SquareState == SquareState.OccupiedByBlack &&
+            Squares[0, 7].SquareState == SquareState.OccupiedByBlack)
+        {
+            if (Squares[0, 4].OccupyingChessPiece is KingPiece {HasMoved: false} &&
+                Squares[0, 7].OccupyingChessPiece is RookPiece {HasMoved: false})
+            {
+                stringBuilder.Append('k');
+            }
+
+            
+        }
+        if (Squares[0, 4].SquareState == SquareState.OccupiedByBlack &&
+            Squares[0, 0].SquareState == SquareState.OccupiedByBlack)
+        {
+            if (Squares[0, 4].OccupyingChessPiece is KingPiece {HasMoved: false} &&
+                Squares[0, 0].OccupyingChessPiece is RookPiece {HasMoved: false})
+            {
+                stringBuilder.Append('q');
+            }
+        }
+        
+        return stringBuilder.ToString();
+    }
+
+    public Square NotationToSquare(string notation)
+    {
+        if (notation.Length != 2)
+        {
+            throw new Exception("notation was in wrong format");
+        }
+
+        var row = notation[0] - 'a';
+        var column = 8 - (notation[1] - '0');
+
+        return Squares[column, row];
     }
     
-    
-    
-    
-    
-    
-    
-    //
-    // public static void SetMovableSquares(List<EntityLogic.Entity> entities)
-    // {
-    //     foreach (var entity in SelectedPieceMovableSquares)
-    //     {
-    //         entity.GetComponent<Renderer>().Color = Color.White;
-    //     }
-    //
-    //     foreach (var chessPin in ChessPins)
-    //     {
-    //         if (chessPin.PinnedPiece == SelectedPiece)
-    //         {
-    //             entities = entities.Where(e => chessPin.ViableSquares.Contains(e.GetBehaviour<Square>())).ToList();
-    //
-    //         }
-    //     }
-    //
-    //     if (SelectedPiece is KingPiece kingPiece)
-    //     {
-    //         var list = playerTurn == ChessColor.Black ? WhitePieces : BlackPieces;
-    //         foreach (var piece in list)
-    //         {
-    //             var attackedSquares = piece.GetBehaviour<ChessPiece>().GetThreats(kingPiece);
-    //
-    //             foreach (var square in attackedSquares)
-    //             {
-    //                 if (entities.Contains(square.Entity))
-    //                 {
-    //                     entities.Remove(square.Entity);
-    //                 }
-    //             }
-    //         }
-    //     }
-    //     
-    //     foreach (var newEntity in entities)
-    //     {
-    //         newEntity.GetComponent<Renderer>().Color = Color.Green;
-    //     }
-    //     
-    //     SelectedPieceMovableSquares = entities;
-    // }
-    //
-    // private static void CalculatePins(List<EntityLogic.Entity> pieces)
-    // {
-    //     var pins = new List<ChessPin>();
-    //     foreach (var piece in pieces)
-    //     {
-    //         var pin = piece.GetBehaviour<ChessPiece>().GetChessPin();
-    //
-    //         if (pin is not null)
-    //         {
-    //             pins.Add(pin);
-    //             
-    //         }
-    //     }
-    //
-    //     ChessPins = pins;
-    // }
-    //
-    // private static void CalculatePins(List<EntityLogic.Entity> pieces)
-    // {
-    //     var pins = new List<ChessPin>();
-    //     foreach (var piece in pieces)
-    //     {
-    //         var pin = piece.GetBehaviour<ChessPiece>().GetChessPin();
-    //
-    //         if (pin is not null)
-    //         {
-    //             pins.Add(pin);
-    //             
-    //         }
-    //     }
-    //
-    //     ChessPins = pins;
-    // }
 }

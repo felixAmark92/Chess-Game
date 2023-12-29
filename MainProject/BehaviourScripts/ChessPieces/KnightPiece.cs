@@ -10,4 +10,9 @@ public class KnightPiece : ChessPiece
     {
         ChessMovement = new KnightMovement(chessBoard, this);
     }
+
+    public override char Get_FEN_Notation()
+    {
+        return ChessColor == ChessColor.Black ? 'n' : 'N';
+    }
 }

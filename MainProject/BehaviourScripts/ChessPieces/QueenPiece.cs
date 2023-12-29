@@ -12,4 +12,9 @@ public class QueenPiece : ChessPiece
         ChessMovement = new QueenMovement(chessBoard, this);
         PinCalculator = new QueenPinCalculator(chessBoard, this);
     }
+
+    public override char Get_FEN_Notation()
+    {
+        return ChessColor == ChessColor.Black ? 'q' : 'Q';
+    }
 }

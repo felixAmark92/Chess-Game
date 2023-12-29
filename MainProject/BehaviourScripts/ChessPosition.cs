@@ -24,4 +24,6 @@ public class ChessPosition
             return $"{(char)('a' + Position.X)}{8 - Position.Y}";
         }
     } 
+    
+    
 }

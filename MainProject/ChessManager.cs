@@ -48,7 +48,7 @@ public static class ChessManager
     
     public static GhostPawn BlackGhostPawn { get; set; }
 
-    private static ChessColor _playerTurn = ChessColor.White;
+    public static ChessColor PlayerTurn = ChessColor.White;
     private static ChessPiece? _selectedPiece;
     public static IEnumerable<Square> SelectedPieceMovableSquares { get; private set; } = new List<Square>();
 
@@ -76,10 +76,7 @@ public static class ChessManager
             var piece = ChessPieceFactory.CreateChessPiece(ChessType.Pawn, ChessColor.Black, new Point(i, 1));
             blackPiecesEntities.Add(piece);
         }
-        
-        
-
-        var whitePiecesEntities = new List<EntityLogic.Entity>()
+        var whitePiecesEntities = new List<Entity>()
         {
             ChessPieceFactory.CreateChessPiece(ChessType.Rook, ChessColor.White, new Point(7, 7)),
             ChessPieceFactory.CreateChessPiece(ChessType.Rook, ChessColor.White, new Point(0, 7)),
@@ -104,8 +101,6 @@ public static class ChessManager
         WhitePieces = whitePiecesEntities.Select(e => e.GetBehaviour<ChessPiece>()).ToList();
         BlackPieces = blackPiecesEntities.Select(e => e.GetBehaviour<ChessPiece>()).ToList();
     }
-    
-    
     public static void MoveSelectedPiece(Square square)
     {
         foreach (var movableSquare in SelectedPieceMovableSquares)
@@ -205,11 +200,11 @@ public static class ChessManager
 
     private static void EndTurn()
     {
-        if (_playerTurn == ChessColor.Black)
+        if (PlayerTurn == ChessColor.Black)
         {
             CheckMateCalculator.CalculateChecks(BlackPieces);
             SwitchActivePieces(BlackPieces, WhitePieces);
-            CalculatePins(WhitePieces, BlackPieces);
+            CheckMateCalculator.CalculatePins(WhitePieces, BlackPieces);
             CheckMateCalculator.CalculateCheckMate(WhitePieces);
             WhiteGhostPawn = null;
         }
@@ -217,11 +212,11 @@ public static class ChessManager
         {
             CheckMateCalculator.CalculateChecks(WhitePieces);
             SwitchActivePieces(WhitePieces, BlackPieces);
-            CalculatePins(BlackPieces, WhitePieces);
+            CheckMateCalculator.CalculatePins(BlackPieces, WhitePieces);
             CheckMateCalculator.CalculateCheckMate(BlackPieces);
             BlackGhostPawn = null;
         }
-        _playerTurn = _playerTurn == ChessColor.Black ? ChessColor.White : ChessColor.Black;
+        PlayerTurn = PlayerTurn == ChessColor.Black ? ChessColor.White : ChessColor.Black;
     }
     private static void SwitchActivePieces(List<ChessPiece> deactivate, List<ChessPiece> activate)
     {
@@ -234,17 +229,7 @@ public static class ChessManager
             chessPiece.Entity.GetComponent<Interactive>().SetActive();
         }
     }
-    public static void CalculatePins(List<ChessPiece> attacker, List<ChessPiece> defender)
-    {
-        foreach (var piece in attacker)
-        {
-            piece.IsPinned = false;
-        }
-        foreach (var piece in defender)
-        {
-            piece.CalculatePin();
-        }
-    }
+
 
     public static ChessPiece PromotePawn(PawnPiece pawnPiece, ChessType chessType)
     {

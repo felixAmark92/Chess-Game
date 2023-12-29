@@ -87,6 +87,10 @@ public class PawnMovement : IChessMovement
             if (_chessBoard.Squares[rightSide.Y, rightSide.X].SquareState == CurrentSquare.SquareState)
             {
                 _chessBoard.Squares[rightSide.Y, rightSide.X].OccupyingChessPiece.IsGuarded = true;
+                if (_chessBoard.Squares[rightSide.Y, rightSide.X].OccupyingChessPiece is QueenPiece)
+                {
+                    Console.WriteLine("pawn is guarding queenpeice");
+                }
             }
         }
         
@@ -116,14 +120,18 @@ public class PawnMovement : IChessMovement
                 squares.Add(_chessBoard.Squares[leftSide.Y, leftSide.X]);
                 if (_chessBoard.Squares[leftSide.Y, leftSide.X].OccupyingChessPiece is KingPiece && checkInspect)
                 {
-                    CheckMateCalculator.SetKingIsChecked(_chessBoard.Squares[rightSide.Y, rightSide.X].OccupyingChessPiece.ChessColor);
-                    CheckMateCalculator.AttackerPaths.Add(new List<Square>(){ _chessBoard.Squares[rightSide.Y, rightSide.X] } );
+                    CheckMateCalculator.SetKingIsChecked(_chessBoard.Squares[leftSide.Y, leftSide.X].OccupyingChessPiece.ChessColor);
+                    CheckMateCalculator.AttackerPaths.Add(new List<Square>(){ _chessBoard.Squares[leftSide.Y, leftSide.X] } );
                     CheckMateCalculator.AttackingPieceSquare.Add(CurrentSquare);
                 }
             }
             if (_chessBoard.Squares[leftSide.Y, leftSide.X].SquareState == CurrentSquare.SquareState)
             {
                 _chessBoard.Squares[leftSide.Y, leftSide.X].OccupyingChessPiece.IsGuarded = true;
+                if (_chessBoard.Squares[leftSide.Y, leftSide.X].OccupyingChessPiece is QueenPiece)
+                {
+                    Console.WriteLine("pawn is guarding queenpeice");
+                }
             }
         }
 

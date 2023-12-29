@@ -108,11 +108,14 @@ public abstract class ChessPiece : Behaviour
 
     public virtual void RemoveSquaresThatAreAttacked(KingPiece kingPiece, List<Square> kingSquares)
     {
+        
         var thisSquares = 
             this is KingPiece ? ChessMovement.GetDefaultSquares(false) : GetMovableSquares(false);
 
         var squares = kingSquares.Where(s => thisSquares.Contains(s)).ToList();
-
+        
+        
+        //for handling castling squares
         foreach (var square in squares)
         {
             if (kingPiece.HasMoved == false && square == ChessBoard.Squares[kingPiece.Pos.Y, kingPiece.Pos.X + 1] )
@@ -131,4 +134,5 @@ public abstract class ChessPiece : Behaviour
     {
         PinCalculator.CalculatePin();
     }
+    public abstract char Get_FEN_Notation();
 }

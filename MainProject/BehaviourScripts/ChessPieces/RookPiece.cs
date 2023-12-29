@@ -14,4 +14,8 @@ public class RookPiece : ChessPiece
         ChessMovement = new RookMovement(chessBoard, this);
         PinCalculator = new RookPinCalculator(chessBoard, this);
     }
+    public override char Get_FEN_Notation()
+    {
+        return ChessColor == ChessColor.Black ? 'r' : 'R';
+    }
 }

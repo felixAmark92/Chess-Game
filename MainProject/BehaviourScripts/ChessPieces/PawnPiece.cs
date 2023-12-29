@@ -54,4 +54,9 @@ public class PawnPiece : ChessPiece
             kingSquares.Remove(square);
         }
     }
+
+    public override char Get_FEN_Notation()
+    {
+        return ChessColor == ChessColor.Black ? 'p' : 'P';
+    }
 }

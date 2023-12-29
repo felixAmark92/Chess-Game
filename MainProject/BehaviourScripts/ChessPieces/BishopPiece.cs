@@ -12,4 +12,9 @@ public class BishopPiece : ChessPiece
         ChessMovement = new BishopMovement(chessBoard, this);
         PinCalculator = new BishopPinCalculator(chessBoard, this);
     }
+
+    public override char Get_FEN_Notation()
+    {
+        return ChessColor == ChessColor.Black ? 'b' : 'B';
+    }
 }
