@@ -66,20 +66,20 @@ public class Main : Game
             piece.Entity.GetComponent<Renderer>().Color = piece.IsGuarded ? Color.Blue : Color.White;
         }
 
-        // if (ChessManager.PlayerTurn == ChessColor.Black)
-        // {
-        //     var computerMove = StockFish.GetCommand(ChessManager.ChessBoard.Get_FEN_String());
-        //
-        //     char[] startingSquareString = { computerMove[0], computerMove[1] }; 
-        //     char[] targetSquareString = { computerMove[2], computerMove[3] };
-        //
-        //     var piece = ChessManager.ChessBoard.NotationToSquare(new string(startingSquareString)).OccupyingChessPiece;
-        //     var target = ChessManager.ChessBoard.NotationToSquare(new string(targetSquareString));
-        //
-        //     ChessManager.SelectedPiece = piece;
-        //     ChessManager.MoveSelectedPiece(target);
-        //
-        // }
+        if (ChessManager.PlayerTurn == ChessColor.Black)
+        {
+            var computerMove = StockFish.GetCommand(ChessManager.ChessBoard.Get_FEN_String());
+        
+            char[] startingSquareString = { computerMove[0], computerMove[1] }; 
+            char[] targetSquareString = { computerMove[2], computerMove[3] };
+        
+            var piece = ChessManager.ChessBoard.NotationToSquare(new string(startingSquareString)).OccupyingChessPiece;
+            var target = ChessManager.ChessBoard.NotationToSquare(new string(targetSquareString));
+        
+            ChessManager.SelectedPiece = piece;
+            ChessManager.MoveSelectedPiece(target);
+        
+        }
         
 
 

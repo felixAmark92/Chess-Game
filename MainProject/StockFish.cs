@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading;
 
@@ -9,18 +10,26 @@ namespace MainProject;
 public static class StockFish
 {
 
-    private static readonly string _stockFishPath = "C:\\Users\\felix\\Downloads\\stockfish-windows-x86-64-avx2\\stockfish\\stockfish-windows-x86-64-avx2.exe";
+
 
     public static string GetCommand(string boardState)
     {
-        if (!File.Exists(_stockFishPath))
+        var localApp = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+        var appdataDirectory = Path.Combine(localApp, "ChessGame");
+        Directory.CreateDirectory(appdataDirectory);
+
+        var stockfishPathFile = Path.Combine(appdataDirectory, "StockfishPath");
+        var stockfistPath = File.ReadAllText(stockfishPathFile);
+        
+        
+        if (!File.Exists(stockfistPath))
         {
             throw new Exception(
                 "Could not find stockfish. please download stockfish and make sure you enter its path in the _stockFishPath string above");
         }
         
         using var stockfishProcess = new Process();
-        stockfishProcess.StartInfo.FileName = _stockFishPath;
+        stockfishProcess.StartInfo.FileName = stockfistPath;
         stockfishProcess.StartInfo.UseShellExecute = false;
         stockfishProcess.StartInfo.RedirectStandardInput = true;
         stockfishProcess.StartInfo.RedirectStandardOutput = true;
