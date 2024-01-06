@@ -40,10 +40,6 @@ public class Main : Game
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         
         ChessManager.LoadPieces();
-
-
-
-        // TODO: use this.Content to load your game content here
     }
 
     protected override void Update(GameTime gameTime)
@@ -56,36 +52,22 @@ public class Main : Game
         {
             Console.WriteLine(ChessManager.ChessBoard.Get_FEN_String());
         }
-
-        foreach (var piece in ChessManager.WhitePieces)
-        {
-            piece.Entity.GetComponent<Renderer>().Color = piece.IsGuarded ? Color.Blue : Color.White;
-        }
-        foreach (var piece in ChessManager.BlackPieces)
-        {
-            piece.Entity.GetComponent<Renderer>().Color = piece.IsGuarded ? Color.Blue : Color.White;
-        }
-
-        // if (ChessManager.PlayerTurn == ChessColor.Black)
-        // {
-        //     var computerMove = StockFish.GetCommand(ChessManager.ChessBoard.Get_FEN_String());
-        //
-        //     char[] startingSquareString = { computerMove[0], computerMove[1] }; 
-        //     char[] targetSquareString = { computerMove[2], computerMove[3] };
-        //
-        //     var piece = ChessManager.ChessBoard.NotationToSquare(new string(startingSquareString)).OccupyingChessPiece;
-        //     var target = ChessManager.ChessBoard.NotationToSquare(new string(targetSquareString));
-        //
-        //     ChessManager.SelectedPiece = piece;
-        //     ChessManager.MoveSelectedPiece(target);
-        //
-        // }
         
 
-
-        // TODO: Add your update logic here
+        if (ChessManager.PlayerTurn == ChessColor.Black)
+        {
+            var computerMove = StockFish.GetCommand(ChessManager.ChessBoard.Get_FEN_String());
+        
+            char[] startingSquareString = { computerMove[0], computerMove[1] }; 
+            char[] targetSquareString = { computerMove[2], computerMove[3] };
+        
+            var piece = ChessManager.ChessBoard.NotationToSquare(new string(startingSquareString)).OccupyingChessPiece;
+            var target = ChessManager.ChessBoard.NotationToSquare(new string(targetSquareString));
+        
+            ChessManager.SelectedPiece = piece;
+            ChessManager.MoveSelectedPiece(target);
+        }
         InteractiveSystem.Update();
-
         base.Update(gameTime);
     }
 

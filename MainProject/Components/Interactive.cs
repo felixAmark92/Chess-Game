@@ -2,6 +2,7 @@
 using MainProject.Systems;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using MonoGameGameLibrary1;
 
 namespace MainProject.Components;
 
