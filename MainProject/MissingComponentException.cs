@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MainProject;
+namespace MonoGameGameLibrary1;
 
 public class MissingComponentException : Exception
 {
