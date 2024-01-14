@@ -51,7 +51,7 @@ public class PawnMovement : IChessMovement
         }
 
         var rightSide = Pos + direction + new Point(1, 0);
-        if (_chessBoard.InsideChessBoard(rightSide))
+        if (_chessBoard.GetIfInsideChessBoard(rightSide))
         {
             if (ChessManager.BlackGhostPawn is not null)
             {
@@ -95,7 +95,7 @@ public class PawnMovement : IChessMovement
         }
         
         var leftSide = Pos + direction + new Point(-1, 0);
-        if (_chessBoard.InsideChessBoard(leftSide))
+        if (_chessBoard.GetIfInsideChessBoard(leftSide))
         {
             if (ChessManager.BlackGhostPawn is not null)
             {

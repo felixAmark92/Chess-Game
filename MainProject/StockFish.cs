@@ -9,9 +9,6 @@ namespace MainProject;
 
 public static class StockFish
 {
-
-
-
     public static string GetCommand(string boardState)
     {
         var localApp = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
@@ -25,7 +22,7 @@ public static class StockFish
         if (!File.Exists(stockfistPath))
         {
             throw new Exception(
-                "Could not find stockfish. please download stockfish and make sure you enter its path in the _stockFishPath string above");
+                "Could not find stockfish. please download stockfish and make sure you enter its path into the stockfish project");
         }
         
         using var stockfishProcess = new Process();
@@ -45,7 +42,7 @@ public static class StockFish
         Thread.Sleep(1000);
         stockfishStreamWriter.WriteLine("quit");
         string output = stockfishStreamReader.ReadToEnd();
-        // Close the Stockfish process
+
         stockfishProcess.WaitForExit();
 
         Console.WriteLine(output);

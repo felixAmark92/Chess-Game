@@ -31,7 +31,7 @@ public class ChessBoard
         }
     }
 
-    public bool InsideChessBoard(Point point)
+    public bool GetIfInsideChessBoard(Point point)
     {
         return point.X >= 0 &&
                point.X < Squares.GetLength(1) &&
@@ -43,10 +43,25 @@ public class ChessBoard
     {
         return chessColor == ChessColor.Black ? ChessColor.White : ChessColor.Black;
     }
+    
     public string Get_FEN_String()
     {
         var stringBuilder = new StringBuilder();
 
+        stringBuilder.Append(GetBoardPosition());
+        stringBuilder.Append(ChessManager.PlayerTurn == ChessColor.Black ? " b " : " w ");
+
+        stringBuilder.Append(GetIfCanCastle(Squares[7, 4], Squares[7, 7], SquareState.OccupiedByWhite ,"K"));
+        stringBuilder.Append(GetIfCanCastle(Squares[7, 4], Squares[7, 0], SquareState.OccupiedByWhite, "Q"));
+        stringBuilder.Append(GetIfCanCastle(Squares[0, 4], Squares[0, 7], SquareState.OccupiedByBlack, "k"));
+        stringBuilder.Append(GetIfCanCastle(Squares[0, 4], Squares[0, 0], SquareState.OccupiedByBlack, "q"));
+        
+        return stringBuilder.ToString();
+    }
+
+    private string GetBoardPosition()
+    {
+        StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < Squares.GetLength(0); i++)
         {
             int j = 0;
@@ -75,51 +90,21 @@ public class ChessBoard
                 stringBuilder.Append('/');
             }
         }
-        stringBuilder.Append(ChessManager.PlayerTurn == ChessColor.Black ? " b " : " w ");
 
-        if (Squares[7, 4].SquareState == SquareState.OccupiedByWhite &&
-            Squares[7, 7].SquareState == SquareState.OccupiedByWhite)
-        {
-            if (Squares[7, 4].OccupyingChessPiece is KingPiece {HasMoved: false} &&
-                Squares[7, 7].OccupyingChessPiece is RookPiece {HasMoved: false})
-            {
-                stringBuilder.Append('K');
-            }
-
-            
-        }
-        if (Squares[7, 4].SquareState == SquareState.OccupiedByWhite &&
-            Squares[7, 0].SquareState == SquareState.OccupiedByWhite)
-        {
-            if (Squares[7, 4].OccupyingChessPiece is KingPiece {HasMoved: false} &&
-                Squares[7, 0].OccupyingChessPiece is RookPiece {HasMoved: false})
-            {
-                stringBuilder.Append('Q');
-            }
-        }
-        
-        if (Squares[0, 4].SquareState == SquareState.OccupiedByBlack &&
-            Squares[0, 7].SquareState == SquareState.OccupiedByBlack)
-        {
-            if (Squares[0, 4].OccupyingChessPiece is KingPiece {HasMoved: false} &&
-                Squares[0, 7].OccupyingChessPiece is RookPiece {HasMoved: false})
-            {
-                stringBuilder.Append('k');
-            }
-
-            
-        }
-        if (Squares[0, 4].SquareState == SquareState.OccupiedByBlack &&
-            Squares[0, 0].SquareState == SquareState.OccupiedByBlack)
-        {
-            if (Squares[0, 4].OccupyingChessPiece is KingPiece {HasMoved: false} &&
-                Squares[0, 0].OccupyingChessPiece is RookPiece {HasMoved: false})
-            {
-                stringBuilder.Append('q');
-            }
-        }
-        
         return stringBuilder.ToString();
+    }
+
+    private string GetIfCanCastle(Square kingSquare, Square rookSquare, SquareState squareState, string castleIdentifier)
+    {
+        if (kingSquare.SquareState != squareState ||
+            rookSquare.SquareState != squareState) return string.Empty;
+        
+        if (kingSquare.OccupyingChessPiece is KingPiece {HasMoved: false} &&
+            rookSquare.OccupyingChessPiece is RookPiece {HasMoved: false})
+        {
+            return castleIdentifier;
+        }
+        return string.Empty;
     }
 
     public Square NotationToSquare(string notation)

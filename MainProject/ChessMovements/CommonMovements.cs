@@ -21,7 +21,7 @@ public static class CommonMovements
         var originalPos = pos;
 
         pos += incrementation;
-        while (chessBoard.InsideChessBoard(pos))
+        while (chessBoard.GetIfInsideChessBoard(pos))
         {
             if (chessBoard.Squares[pos.Y, pos.X].SquareState == SquareState.NotOccupied)
             {
@@ -45,7 +45,7 @@ public static class CommonMovements
                     }
 
                     pos += incrementation;
-                    if (chessBoard.InsideChessBoard(pos))
+                    if (chessBoard.GetIfInsideChessBoard(pos))
                     {
                         squares.Add(chessBoard.Squares[pos.Y, pos.X]);
                     }
@@ -72,7 +72,7 @@ public static class CommonMovements
         var i = 0;
         var originalPos = pos;
         pos += incrementation;
-        while (chessBoard.InsideChessBoard(pos) && i < limit)
+        while (chessBoard.GetIfInsideChessBoard(pos) && i < limit)
         {
 
             i++;
@@ -93,7 +93,7 @@ public static class CommonMovements
                     }
 
                     pos += incrementation;
-                    if (chessBoard.InsideChessBoard(pos))
+                    if (chessBoard.GetIfInsideChessBoard(pos))
                     {
                         squares.Add(chessBoard.Squares[pos.Y, pos.X]);
                     }
@@ -120,7 +120,7 @@ public static class CommonMovements
         var chessPin = new List<Square>();
         chessPin.Add(chessBoard.Squares[pos.Y, pos.X]);
         pos += incrementation;
-        while (chessBoard.InsideChessBoard(pos))
+        while (chessBoard.GetIfInsideChessBoard(pos))
         {
             if (chessBoard.Squares[pos.Y, pos.X].SquareState == SquareState.NotOccupied)
             {

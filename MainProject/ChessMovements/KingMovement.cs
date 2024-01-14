@@ -49,7 +49,7 @@ public class KingMovement : IChessMovement
         {
             for (int x = Pos.X - 1; x < Pos.X + 2; x++)
             {
-                if (!_chessBoard.InsideChessBoard(new Point(x, y)))
+                if (!_chessBoard.GetIfInsideChessBoard(new Point(x, y)))
                 {
                     continue;
                 }

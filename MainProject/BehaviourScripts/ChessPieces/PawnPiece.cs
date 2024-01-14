@@ -28,7 +28,7 @@ public class PawnPiece : ChessPiece
         var thisSquares = new List<Square>();
         
         var rightSide = Pos + direction + new Point(1, 0);
-        if (ChessManager.ChessBoard.InsideChessBoard(rightSide))
+        if (ChessManager.ChessBoard.GetIfInsideChessBoard(rightSide))
         {
             if (ChessManager.ChessBoard.Squares[rightSide.Y, rightSide.X].SquareState == SquareState.NotOccupied)
             {
@@ -41,7 +41,7 @@ public class PawnPiece : ChessPiece
             }
         }
         var leftSide = Pos + direction + new Point(-1, 0);
-        if (ChessManager.ChessBoard.InsideChessBoard(leftSide))
+        if (ChessManager.ChessBoard.GetIfInsideChessBoard(leftSide))
         {
             if (ChessManager.ChessBoard.Squares[leftSide.Y, leftSide.X].SquareState == SquareState.NotOccupied)
             {
