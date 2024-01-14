@@ -9,5 +9,5 @@ Monogame <br/>
 Stockfish <br/>
 </h5>
 
-For stockfish integration to work you have to enter the path to stockfish into the stockfish.cs file
+For stockfish integration to work you have to enter the path to stockfish in the stockfish project
 
