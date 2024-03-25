@@ -9,5 +9,9 @@ Monogame <br/>
 Stockfish <br/>
 </h5>
 
-For stockfish integration to work you have to enter the path to stockfish in the stockfish project
+For stockfish integration to work you first have to download stockfish at their website
+
+<a href="https://stockfishchess.org/download/">Download stockfish</a> 
+
+Then enter the path to stockfish program in the stockfish project
 
