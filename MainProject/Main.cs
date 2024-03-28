@@ -66,7 +66,7 @@ public class Main : Game
 
             Task.Run(async () =>
             {
-                var computerMove =  await StockFish.GetCommand2(ChessManager.ChessBoard.Get_FEN_String());
+                var computerMove =  await StockFish.GetCommandREST(ChessManager.ChessBoard.Get_FEN_String());
         
                 char[] startingSquareString = { computerMove[0], computerMove[1] }; 
                 char[] targetSquareString = { computerMove[2], computerMove[3] };

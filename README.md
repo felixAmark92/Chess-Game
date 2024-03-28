@@ -4,14 +4,7 @@
 
 <h4>Requrements:</h4>
   <h5>
-Monogame <br/>
 .NET 6 SDK <br/>
-Stockfish <br/>
 </h5>
 
-For stockfish integration to work you first have to download stockfish at their website
-
-<a href="https://stockfishchess.org/download/">Download stockfish</a> 
-
-Then enter the path to stockfish program in the stockfish project
-
+Stockfish is now integrated using REST API. All you have to do is build

@@ -24,9 +24,9 @@ public static class StockFish
         
     }
 
-    public static async Task<string> GetCommand2(string fenString)
+    public static async Task<string> GetCommandREST(string fenString)
     {
-         var response = await _client.GetAsync($"?fen={fenString}&depth=1");
+         var response = await _client.GetAsync($"?fen={fenString}&depth=10");
 
          if (!response.IsSuccessStatusCode)
          {
