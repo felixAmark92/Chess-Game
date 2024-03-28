@@ -51,11 +51,19 @@ public class ChessBoard
         stringBuilder.Append(GetBoardPosition());
         stringBuilder.Append(ChessManager.PlayerTurn == ChessColor.Black ? " b " : " w ");
 
-        stringBuilder.Append(GetIfCanCastle(Squares[7, 4], Squares[7, 7], SquareState.OccupiedByWhite ,"K"));
-        stringBuilder.Append(GetIfCanCastle(Squares[7, 4], Squares[7, 0], SquareState.OccupiedByWhite, "Q"));
-        stringBuilder.Append(GetIfCanCastle(Squares[0, 4], Squares[0, 7], SquareState.OccupiedByBlack, "k"));
-        stringBuilder.Append(GetIfCanCastle(Squares[0, 4], Squares[0, 0], SquareState.OccupiedByBlack, "q"));
+        var canCastleStringBuilder = new StringBuilder();
         
+        canCastleStringBuilder.Append(GetIfCanCastle(Squares[7, 4], Squares[7, 7], SquareState.OccupiedByWhite ,"K"));
+        canCastleStringBuilder.Append(GetIfCanCastle(Squares[7, 4], Squares[7, 0], SquareState.OccupiedByWhite, "Q"));
+        canCastleStringBuilder.Append(GetIfCanCastle(Squares[0, 4], Squares[0, 7], SquareState.OccupiedByBlack, "k"));
+        canCastleStringBuilder.Append(GetIfCanCastle(Squares[0, 4], Squares[0, 0], SquareState.OccupiedByBlack, "q"));
+
+        var canCastleString = canCastleStringBuilder.ToString();
+
+        stringBuilder.Append(string.IsNullOrEmpty(canCastleString) ? "-" : canCastleString);
+
+        stringBuilder.Append(" - 1 11");
+        Console.WriteLine(stringBuilder.ToString());
         return stringBuilder.ToString();
     }
 

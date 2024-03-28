@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using MainProject.Components;
 using MainProject.Enums;
 using MainProject.Factories;
@@ -14,6 +15,7 @@ public class Main : Game
 {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
+    private bool _pauseGame;
 
     public Main()
     {
@@ -57,18 +59,26 @@ public class Main : Game
             Console.WriteLine(ChessManager.ChessBoard.Get_FEN_String());
         }
 
-        if (ChessManager.PlayerTurn == ChessColor.Black)
+
+        if (ChessManager.PlayerTurn == ChessColor.Black && !_pauseGame)
         {
-            var computerMove = StockFish.GetCommand(ChessManager.ChessBoard.Get_FEN_String());
+            _pauseGame = true;
+
+            Task.Run(async () =>
+            {
+                var computerMove =  await StockFish.GetCommand2(ChessManager.ChessBoard.Get_FEN_String());
         
-            char[] startingSquareString = { computerMove[0], computerMove[1] }; 
-            char[] targetSquareString = { computerMove[2], computerMove[3] };
+                char[] startingSquareString = { computerMove[0], computerMove[1] }; 
+                char[] targetSquareString = { computerMove[2], computerMove[3] };
         
-            var piece = ChessManager.ChessBoard.NotationToSquare(new string(startingSquareString)).OccupyingChessPiece;
-            var target = ChessManager.ChessBoard.NotationToSquare(new string(targetSquareString));
+                var piece = ChessManager.ChessBoard.NotationToSquare(new string(startingSquareString)).OccupyingChessPiece;
+                var target = ChessManager.ChessBoard.NotationToSquare(new string(targetSquareString));
         
-            ChessManager.SelectedPiece = piece;
-            ChessManager.MoveSelectedPiece(target);
+                ChessManager.SelectedPiece = piece;
+                ChessManager.MoveSelectedPiece(target);
+                _pauseGame = false;
+            });
+            
         }
 
         // TODO: Add your update logic here

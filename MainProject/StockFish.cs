@@ -2,13 +2,63 @@
 using System.Diagnostics;
 using System.IO;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Json;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace MainProject;
 
 public static class StockFish
 {
+
+    private static readonly HttpClient _client;
+
+    static StockFish()
+    {
+        _client = new HttpClient();
+
+        _client.BaseAddress = new Uri("https://stockfish.online/api/s/v2.php");
+        
+    }
+
+    public static async Task<string> GetCommand2(string fenString)
+    {
+         var response = await _client.GetAsync($"?fen={fenString}&depth=1");
+
+         if (!response.IsSuccessStatusCode)
+         {
+             return null;
+         }
+
+         var responseValue = await response.Content.ReadFromJsonAsync<StockFishResponse>();
+
+         if (!responseValue.Success)
+         {
+             return null;
+         }
+         
+
+         var bestMove = responseValue.BestMove;
+         
+         var stockFishMoveRegex = new Regex("bestmove ([a-h][1-8][a-h][1-8])");
+
+         var result = stockFishMoveRegex.Match(bestMove);
+            
+         var final = result.Groups[1].ToString();
+
+         if (string.IsNullOrEmpty(final))
+         {
+             Debug.WriteLine("why?");
+         }
+
+         Debug.WriteLine($"Latest calculated move: {final}");
+         return final;
+
+    }
+    
     public static string GetCommand(string boardState)
     {
         var localApp = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
@@ -55,3 +105,5 @@ public static class StockFish
 
     }
 }
+
+public record StockFishResponse(bool Success, float? Evaluation, int? Mate, string BestMove, string Continuation);
